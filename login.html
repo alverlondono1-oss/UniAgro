@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uniagro | Iniciar Sesión</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="login-split">
+        <!-- Left Side: Form -->
+        <div class="login-form-container">
+            <a href="marketplace.html" class="nav-brand" style="margin-bottom: 2.5rem;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="var(--agro-green)"/>
+                    <path d="M2 17L12 22L22 17" stroke="var(--agro-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 12L12 17L22 12" stroke="var(--agro-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Uni<span>agro</span>
+            </a>
+
+            <h1 style="font-size: 2rem; margin-bottom: 0.5rem;">Bienvenido a Uniagro</h1>
+            <p style="color: var(--slate-500); margin-bottom: 1.5rem;">Entra con tu número de celular o correo para ver tus cultivos y ventas.</p>
+
+            <form id="login-form">
+                <div id="login-message" style="display: none; padding: 0.75rem 1rem; border-radius: var(--radius-md); margin-bottom: 1rem; font-size: 0.9rem; font-weight: 500;"></div>
+
+                <!-- Selector de Método de Inicio de Sesión -->
+                <label class="form-label">¿Cómo deseas entrar?</label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1.25rem;">
+                    <button type="button" id="login-method-phone" class="role-option active" style="padding: 0.75rem; text-align: center; align-items: center;">
+                        <div class="role-option-title" style="font-size: 0.95rem;">
+                            <span>📱</span> Con Celular
+                        </div>
+                        <div class="role-option-desc" style="font-size: 0.75rem;">Número de teléfono</div>
+                    </button>
+                    <button type="button" id="login-method-email" class="role-option" style="padding: 0.75rem; text-align: center; align-items: center;">
+                        <div class="role-option-title" style="font-size: 0.95rem;">
+                            <span>✉️</span> Con Correo
+                        </div>
+                        <div class="role-option-desc" style="font-size: 0.75rem;">Correo electrónico</div>
+                    </button>
+                </div>
+
+                <div class="form-group" id="login-phone-group">
+                    <label class="form-label" for="phone">Número de Celular / Teléfono</label>
+                    <div style="position: relative; display: flex; align-items: center;">
+                        <span style="position: absolute; left: 0.9rem; font-weight: 700; color: var(--slate-600); font-size: 1rem; pointer-events: none;">📱</span>
+                        <input type="tel" id="phone" inputmode="numeric" class="form-input" placeholder="Ej. 310 123 4567" style="padding-left: 2.6rem; font-size: 1.1rem; font-weight: 600; letter-spacing: 0.03em; padding-top: 0.85rem; padding-bottom: 0.85rem;" required>
+                    </div>
+                    <small style="display: block; margin-top: 0.35rem; color: var(--slate-500); font-size: 0.8rem;">Escribe los números de tu celular con los que te registraste.</small>
+                </div>
+
+                <div class="form-group" id="login-email-group" style="display: none;">
+                    <label class="form-label" for="email">Correo Electrónico</label>
+                    <input type="email" id="email" class="form-input" placeholder="tu@correo.com" style="font-size: 1.05rem; padding: 0.85rem 1rem;">
+                </div>
+
+                <div class="form-group">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                        <label class="form-label" style="margin: 0;" for="password">Tu Clave o Contraseña</label>
+                        <a href="#" id="forgot-password-link" style="font-size: 0.875rem; font-weight: 600;">¿Olvidaste tu clave?</a>
+                    </div>
+                    <div style="position: relative;">
+                        <input type="password" id="password" class="form-input" placeholder="Escribe tu clave aquí" style="padding-right: 4rem; font-size: 1.1rem; padding-top: 0.85rem; padding-bottom: 0.85rem;" required>
+                        <button type="button" id="toggle-password" style="position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); background: var(--slate-100); padding: 0.3rem 0.6rem; border-radius: var(--radius-md); border: 1px solid var(--slate-300); color: var(--slate-700); cursor: pointer; font-size: 0.8rem; font-weight: 700;">Ver</button>
+                    </div>
+                </div>
+
+                <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 2rem;">
+                    <input type="checkbox" id="remember" checked style="accent-color: var(--agro-green); width: 18px; height: 18px;">
+                    <label for="remember" style="font-size: 0.9rem; color: var(--slate-700);">Recordar mi número / correo en este equipo</label>
+                </div>
+
+                <button type="submit" id="login-submit-btn" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 0.95rem; font-size: 1.05rem;">Entrar a Mi Cuenta</button>
+            </form>
+
+            <p style="text-align: center; margin-top: 2rem; color: var(--slate-600); font-size: 0.875rem;">
+                ¿Aún no tienes una cuenta? <a href="registro.html" style="font-weight: 600;">Regístrate gratis aquí</a>
+            </p>
+        </div>
+
+        <!-- Right Side: Hero -->
+        <div class="login-hero">
+            <div class="login-hero-content">
+                <h2 class="login-hero-title">Empoderando el Mercado Agrícola.</h2>
+                <p class="login-hero-subtitle">Conéctate directamente con los compradores, maneja tu inventario con facilidad y haz crecer tu agronegocio con las herramientas profesionales de Uniagro.</p>
+                
+                <div style="margin-top: 3rem; display: flex; gap: 1rem;">
+                    <div style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 1.5rem; border-radius: var(--radius-lg); flex: 1;">
+                        <h4 style="color: white; font-size: 1.5rem; margin: 0;">10k+</h4>
+                        <p style="color: var(--slate-300); font-size: 0.875rem;">Agricultores Activos</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 1.5rem; border-radius: var(--radius-lg); flex: 1;">
+                        <h4 style="color: white; font-size: 1.5rem; margin: 0;">$50M+</h4>
+                        <p style="color: var(--slate-300); font-size: 0.875rem;">Volumen de Comercio</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyCgCahd5EGN6_f3LgUDBN2LBnPsmIuu1h0",
+          authDomain: "uniagro-c28a1.firebaseapp.com",
+          projectId: "uniagro-c28a1",
+          storageBucket: "uniagro-c28a1.firebasestorage.app",
+          messagingSenderId: "628982611619",
+          appId: "1:628982611619:web:eeede64203d82c8b068916"
+        };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const loginForm = document.getElementById('login-form');
+        const loginMsg = document.getElementById('login-message');
+        const submitBtn = document.getElementById('login-submit-btn');
+        const forgotPasswordLink = document.getElementById('forgot-password-link');
+        const togglePasswordBtn = document.getElementById('toggle-password');
+        const passwordInput = document.getElementById('password');
+        const methodPhoneBtn = document.getElementById('login-method-phone');
+        const methodEmailBtn = document.getElementById('login-method-email');
+        const phoneGroup = document.getElementById('login-phone-group');
+        const emailGroup = document.getElementById('login-email-group');
+        const phoneInput = document.getElementById('phone');
+        const emailInput = document.getElementById('email');
+
+        let loginMethod = 'phone'; // 'phone' | 'email'
+
+        function setLoginMethod(method) {
+            loginMethod = method;
+            if (method === 'phone') {
+                methodPhoneBtn.classList.add('active');
+                methodEmailBtn.classList.remove('active');
+                phoneGroup.style.display = 'block';
+                emailGroup.style.display = 'none';
+                phoneInput.required = true;
+                emailInput.required = false;
+            } else {
+                methodEmailBtn.classList.add('active');
+                methodPhoneBtn.classList.remove('active');
+                phoneGroup.style.display = 'none';
+                emailGroup.style.display = 'block';
+                phoneInput.required = false;
+                emailInput.required = true;
+            }
+        }
+
+        if (methodPhoneBtn && methodEmailBtn) {
+            methodPhoneBtn.addEventListener('click', () => setLoginMethod('phone'));
+            methodEmailBtn.addEventListener('click', () => setLoginMethod('email'));
+        }
+
+        function normalizePhone(raw) {
+            let digits = String(raw || '').replace(/\D/g, '');
+            if (digits.length === 12 && digits.startsWith('57')) {
+                digits = digits.slice(2);
+            }
+            return digits;
+        }
+
+        if (togglePasswordBtn && passwordInput) {
+            togglePasswordBtn.addEventListener('click', () => {
+                const isPwd = passwordInput.type === 'password';
+                passwordInput.type = isPwd ? 'text' : 'password';
+                togglePasswordBtn.textContent = isPwd ? 'Ocultar' : 'Ver';
+            });
+        }
+
+        function showMessage(text, isError = false) {
+            if (!loginMsg) return;
+            loginMsg.style.display = 'block';
+            loginMsg.style.backgroundColor = isError ? '#fee2e2' : '#dcfce7';
+            loginMsg.style.color = isError ? '#b91c1c' : '#15803d';
+            loginMsg.style.border = isError ? '1px solid #fca5a5' : '1px solid #86efac';
+            loginMsg.textContent = text;
+        }
+
+        const savedLogin = localStorage.getItem('uniagro_remember_login') || localStorage.getItem('uniagro_remember_email');
+        if (savedLogin) {
+            if (savedLogin.includes('@')) {
+                setLoginMethod('email');
+                emailInput.value = savedLogin;
+            } else {
+                setLoginMethod('phone');
+                phoneInput.value = savedLogin;
+            }
+            document.getElementById('remember').checked = true;
+        }
+
+        if (forgotPasswordLink) {
+            forgotPasswordLink.addEventListener('click', async (e) => {
+                e.preventDefault();
+                if (loginMethod === 'phone') {
+                    const rawPhone = phoneInput.value.trim() || prompt('Escribe tu número de celular registrado:');
+                    if (!rawPhone) return;
+                    const cleanPhone = normalizePhone(rawPhone);
+                    const found = await findUserInFirestore({ phone: cleanPhone });
+                    if (found && found.clave) {
+                        showMessage(`🔑 Hola ${found.nombre}, tu clave registrada es: ${found.clave}`, false);
+                    } else if (found) {
+                        showMessage(`✅ Encontramos la cuenta de ${found.nombre}. Si no recuerdas tu clave, comunícate con soporte Uniagro o crea una cuenta nueva.`, false);
+                    } else {
+                        showMessage('❌ No encontramos ninguna cuenta con ese número de celular. Verifica los números.', true);
+                    }
+                    return;
+                }
+
+                const currentEmail = emailInput.value.trim();
+                const email = currentEmail || prompt('Ingresa tu correo electrónico para restablecer tu contraseña:');
+                if (!email) return;
+
+                try {
+                    await sendPasswordResetEmail(auth, email);
+                    showMessage('📩 Te hemos enviado un enlace a tu correo para restablecer la contraseña.', false);
+                } catch (err) {
+                    showMessage('❌ No se pudo enviar el correo de recuperación. Verifica que el correo esté registrado.', true);
+                }
+            });
+        }
+
+        async function findUserInFirestore({ phone = '', email = '' }) {
+            try {
+                const snapshot = await getDocs(collection(db, "usuarios"));
+                let matched = null;
+                const cleanTargetPhone = normalizePhone(phone);
+                const cleanTargetEmail = (email || '').toLowerCase();
+                const syntheticEmail = cleanTargetPhone ? `${cleanTargetPhone}@telefono.uniagro.com` : '';
+
+                snapshot.forEach(docSnap => {
+                    const data = docSnap.data();
+                    const docCorreo = (data.Correo || data.email || '').toLowerCase();
+                    const docTel = normalizePhone(data.Telefono || data.telefono || '');
+
+                    const matchByPhone = cleanTargetPhone && (docTel === cleanTargetPhone || docCorreo === syntheticEmail);
+                    const matchByEmail = cleanTargetEmail && docCorreo === cleanTargetEmail;
+
+                    if (matchByPhone || matchByEmail) {
+                        matched = {
+                            uid: data.UID || docSnap.id,
+                            ID: data.ID,
+                            email: data.Correo || syntheticEmail || cleanTargetEmail,
+                            nombre: data.Nombre || (cleanTargetPhone ? `Productor ${cleanTargetPhone}` : cleanTargetEmail.split('@')[0]),
+                            rol: data.Rol || 'campesino',
+                            telefono: data.Telefono || cleanTargetPhone || '',
+                            clave: data.Clave || ''
+                        };
+                    }
+                });
+                return matched;
+            } catch (err) {
+                console.warn("Error al consultar Firestore:", err);
+                return null;
+            }
+        }
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const rawPhone = phoneInput.value.trim();
+            const rawEmail = emailInput.value.trim().toLowerCase();
+            const password = document.getElementById('password').value;
+            const remember = document.getElementById('remember').checked;
+
+            const isUsingPhone = loginMethod === 'phone';
+            const cleanPhone = normalizePhone(rawPhone);
+
+            if (isUsingPhone && (!cleanPhone || cleanPhone.length < 7)) {
+                showMessage('❌ Por favor escribe tu número de celular completo.', true);
+                return;
+            }
+            if (!isUsingPhone && !rawEmail) {
+                showMessage('❌ Por favor escribe tu correo electrónico.', true);
+                return;
+            }
+            if (!password) {
+                showMessage('❌ Por favor escribe tu clave o contraseña.', true);
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Entrando...';
+            showMessage('Buscando tu cuenta en Uniagro...', false);
+
+            try {
+                const firestoreUser = await findUserInFirestore({
+                    phone: isUsingPhone ? cleanPhone : '',
+                    email: isUsingPhone ? '' : rawEmail
+                });
+
+                const authEmailToTry = isUsingPhone
+                    ? ((firestoreUser && firestoreUser.email && firestoreUser.email.includes('@'))
+                        ? firestoreUser.email
+                        : `${cleanPhone}@telefono.uniagro.com`)
+                    : rawEmail;
+
+                let authUser = null;
+                let passwordVerified = false;
+
+                try {
+                    const userCredential = await signInWithEmailAndPassword(auth, authEmailToTry, password);
+                    authUser = userCredential.user;
+                    passwordVerified = true;
+                } catch (authErr) {
+                    // Verificar contra la clave guardada en Firestore o localStorage
+                    if (firestoreUser && firestoreUser.clave && firestoreUser.clave === password) {
+                        passwordVerified = true;
+                    } else if (firestoreUser && !firestoreUser.clave) {
+                        passwordVerified = true;
+                    } else {
+                        const localUsers = JSON.parse(localStorage.getItem('uniagro_users') || '[]');
+                        const localMatch = localUsers.find(u =>
+                            (isUsingPhone && normalizePhone(u.telefono) === cleanPhone && u.password === password) ||
+                            (!isUsingPhone && u.email && u.email.toLowerCase() === rawEmail && u.password === password)
+                        );
+                        if (localMatch) {
+                            passwordVerified = true;
+                        }
+                    }
+
+                    if (!passwordVerified) {
+                        throw authErr;
+                    }
+                }
+
+                const userData = firestoreUser || {
+                    uid: authUser ? authUser.uid : cleanPhone,
+                    email: authUser ? authUser.email : authEmailToTry,
+                    telefono: isUsingPhone ? cleanPhone : '',
+                    nombre: (authUser && authUser.displayName) || (isUsingPhone ? `Campesino ${cleanPhone}` : rawEmail.split('@')[0]),
+                    rol: 'campesino'
+                };
+
+                if (remember) {
+                    localStorage.setItem('uniagro_remember_login', isUsingPhone ? cleanPhone : rawEmail);
+                } else {
+                    localStorage.removeItem('uniagro_remember_login');
+                    localStorage.removeItem('uniagro_remember_email');
+                }
+
+                localStorage.setItem('uniagro_current_user', JSON.stringify(userData));
+
+                const isBuyer = (userData.rol || '').toLowerCase() === 'comprador';
+                const targetPage = isBuyer ? 'marketplace.html' : 'dashboard.html';
+
+                showMessage(`✅ ¡Bienvenido(a), ${userData.nombre}! Entrando...`, false);
+                setTimeout(() => {
+                    window.location.href = targetPage;
+                }, 600);
+            } catch (error) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Entrar a Mi Cuenta';
+                if (isUsingPhone) {
+                    showMessage('❌ Número de celular o clave incorrectos, o aún no te has registrado.', true);
+                } else {
+                    showMessage('❌ Correo o contraseña incorrectos, o el usuario aún no está registrado.', true);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

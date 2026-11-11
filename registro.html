@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uniagro | Crear Cuenta</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="login-split">
+        <!-- Left Side: Registration Form -->
+        <div class="login-form-container">
+            <a href="marketplace.html" class="nav-brand" style="margin-bottom: 2rem;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="var(--agro-green)"/>
+                    <path d="M2 17L12 22L22 17" stroke="var(--agro-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 12L12 17L22 12" stroke="var(--agro-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Uni<span>agro</span>
+            </a>
+
+            <h1 style="font-size: 2rem; margin-bottom: 0.35rem;">Crea tu cuenta fácil</h1>
+            <p style="color: var(--slate-500); margin-bottom: 1.25rem;">Regístrate con tu número de celular sin necesidad de correo electrónico.</p>
+
+            <form id="register-form">
+                <div id="register-message" style="display: none; padding: 0.75rem 1rem; border-radius: var(--radius-md); margin-bottom: 1rem; font-size: 0.9rem; font-weight: 500;"></div>
+
+                <!-- Selección de Rol -->
+                <label class="form-label">1. ¿Cómo te unirás a Uniagro?</label>
+                <div class="role-grid">
+                    <button type="button" class="role-option active" data-role="campesino">
+                        <div class="role-option-title">
+                            <span>🌾</span> Soy Campesino
+                        </div>
+                        <div class="role-option-desc">Quiero publicar y vender mis cosechas directamente.</div>
+                    </button>
+                    <button type="button" class="role-option" data-role="comprador">
+                        <div class="role-option-title">
+                            <span>🛒</span> Soy Comprador
+                        </div>
+                        <div class="role-option-desc">Busco productos agrícolas frescos al mejor precio.</div>
+                    </button>
+                </div>
+
+                <!-- Selector de Método de Registro -->
+                <label class="form-label">2. ¿Con qué dato prefieres entrar?</label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1.25rem;">
+                    <button type="button" id="method-phone-btn" class="role-option active" style="padding: 0.75rem; text-align: center; align-items: center;">
+                        <div class="role-option-title" style="font-size: 0.95rem;">
+                            <span>📱</span> Número de Celular
+                        </div>
+                        <div class="role-option-desc" style="font-size: 0.75rem;">Más fácil, sin correo</div>
+                    </button>
+                    <button type="button" id="method-email-btn" class="role-option" style="padding: 0.75rem; text-align: center; align-items: center;">
+                        <div class="role-option-title" style="font-size: 0.95rem;">
+                            <span>✉️</span> Correo Electrónico
+                        </div>
+                        <div class="role-option-desc" style="font-size: 0.75rem;">Usar mi email</div>
+                    </button>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label class="form-label" for="name">Nombre Completo</label>
+                    <input type="text" id="name" class="form-input" placeholder="Ej. Don Pedro Gómez" style="font-size: 1.05rem; padding: 0.85rem 1rem;" required>
+                </div>
+
+                <div class="form-group" id="phone-group" style="margin-bottom: 1rem;">
+                    <label class="form-label" for="phone">Número de Celular / Teléfono</label>
+                    <div style="position: relative; display: flex; align-items: center;">
+                        <span style="position: absolute; left: 0.9rem; font-weight: 700; color: var(--slate-600); font-size: 1rem; pointer-events: none;">📱</span>
+                        <input type="tel" id="phone" inputmode="numeric" class="form-input" placeholder="Ej. 310 123 4567" style="padding-left: 2.6rem; font-size: 1.1rem; font-weight: 600; letter-spacing: 0.03em; padding-top: 0.85rem; padding-bottom: 0.85rem;" required>
+                    </div>
+                    <small style="display: block; margin-top: 0.35rem; color: var(--slate-500); font-size: 0.8rem;">Escribe solo los números de tu celular. Con este número entrarás siempre.</small>
+                </div>
+
+                <div class="form-group" id="email-group" style="margin-bottom: 1rem; display: none;">
+                    <label class="form-label" for="email">Correo Electrónico</label>
+                    <input type="email" id="email" class="form-input" placeholder="juan@ejemplo.com" style="font-size: 1.05rem; padding: 0.85rem 1rem;">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label class="form-label" for="password">Crea una Clave o Contraseña (mínimo 6 números o letras)</label>
+                    <div style="position: relative;">
+                        <input type="password" id="password" class="form-input" placeholder="Ej. 123456" minlength="6" style="padding-right: 4rem; font-size: 1.1rem; padding-top: 0.85rem; padding-bottom: 0.85rem;" required>
+                        <button type="button" id="toggle-password" style="position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); background: var(--slate-100); padding: 0.3rem 0.6rem; border-radius: var(--radius-md); border: 1px solid var(--slate-300); color: var(--slate-700); cursor: pointer; font-size: 0.8rem; font-weight: 700;">Ver</button>
+                    </div>
+                    <small style="display: block; margin-top: 0.35rem; color: var(--slate-500); font-size: 0.8rem;">Puedes usar 6 números fáciles de recordar para ti.</small>
+                </div>
+
+                <button type="submit" id="register-submit-btn" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 0.95rem; font-size: 1.05rem;">
+                    <span id="register-btn-text">Crear Mi Cuenta</span>
+                </button>
+            </form>
+
+            <p style="text-align: center; margin-top: 1.5rem; color: var(--slate-600); font-size: 0.875rem;">
+                ¿Ya tienes una cuenta? <a href="login.html" style="font-weight: 600;">Inicia Sesión aquí</a>
+            </p>
+        </div>
+
+        <!-- Right Side: Hero -->
+        <div class="login-hero">
+            <div class="login-hero-content">
+                <h2 class="login-hero-title">Cultiva el Futuro con Nosotros.</h2>
+                <p class="login-hero-subtitle">Sin intermediarios innecesarios. Publica tus productos en minutos, recibe ofertas reales y gestiona tus ventas desde un solo panel.</p>
+                
+                <div style="margin-top: 3rem; display: flex; gap: 1rem;">
+                    <div style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 1.5rem; border-radius: var(--radius-lg); flex: 1;">
+                        <h4 style="color: white; font-size: 1.5rem; margin: 0;">100%</h4>
+                        <p style="color: var(--slate-300); font-size: 0.875rem;">Trato Directo</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 1.5rem; border-radius: var(--radius-lg); flex: 1;">
+                        <h4 style="color: white; font-size: 1.5rem; margin: 0;">24/7</h4>
+                        <p style="color: var(--slate-300); font-size: 0.875rem;">Mercado Activo</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyCgCahd5EGN6_f3LgUDBN2LBnPsmIuu1h0",
+          authDomain: "uniagro-c28a1.firebaseapp.com",
+          projectId: "uniagro-c28a1",
+          storageBucket: "uniagro-c28a1.firebasestorage.app",
+          messagingSenderId: "628982611619",
+          appId: "1:628982611619:web:eeede64203d82c8b068916"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let selectedRole = 'campesino';
+        let registerMethod = 'phone'; // 'phone' | 'email'
+
+        const roleCards = document.querySelectorAll('.role-grid .role-option');
+        roleCards.forEach(card => {
+            card.addEventListener('click', () => {
+                roleCards.forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+                selectedRole = card.getAttribute('data-role') || 'campesino';
+            });
+        });
+
+        const methodPhoneBtn = document.getElementById('method-phone-btn');
+        const methodEmailBtn = document.getElementById('method-email-btn');
+        const phoneGroup = document.getElementById('phone-group');
+        const emailGroup = document.getElementById('email-group');
+        const phoneInput = document.getElementById('phone');
+        const emailInput = document.getElementById('email');
+
+        function setRegisterMethod(method) {
+            registerMethod = method;
+            if (method === 'phone') {
+                methodPhoneBtn.classList.add('active');
+                methodEmailBtn.classList.remove('active');
+                phoneGroup.style.display = 'block';
+                emailGroup.style.display = 'none';
+                phoneInput.required = true;
+                emailInput.required = false;
+            } else {
+                methodEmailBtn.classList.add('active');
+                methodPhoneBtn.classList.remove('active');
+                phoneGroup.style.display = 'none';
+                emailGroup.style.display = 'block';
+                phoneInput.required = false;
+                emailInput.required = true;
+            }
+        }
+
+        if (methodPhoneBtn && methodEmailBtn) {
+            methodPhoneBtn.addEventListener('click', () => setRegisterMethod('phone'));
+            methodEmailBtn.addEventListener('click', () => setRegisterMethod('email'));
+        }
+
+        function normalizePhone(raw) {
+            let digits = String(raw || '').replace(/\D/g, '');
+            if (digits.length === 12 && digits.startsWith('57')) {
+                digits = digits.slice(2);
+            }
+            return digits;
+        }
+
+        const togglePasswordBtn = document.getElementById('toggle-password');
+        const passwordInput = document.getElementById('password');
+        if (togglePasswordBtn && passwordInput) {
+            togglePasswordBtn.addEventListener('click', () => {
+                const isPwd = passwordInput.type === 'password';
+                passwordInput.type = isPwd ? 'text' : 'password';
+                togglePasswordBtn.textContent = isPwd ? 'Ocultar' : 'Ver';
+            });
+        }
+
+        const registerForm = document.getElementById('register-form');
+        const registerMsg = document.getElementById('register-message');
+        const submitBtn = document.getElementById('register-submit-btn');
+        const submitBtnText = document.getElementById('register-btn-text');
+
+        function showMessage(text, isError = false) {
+            if (!registerMsg) return;
+            registerMsg.style.display = 'block';
+            registerMsg.style.backgroundColor = isError ? '#fee2e2' : '#dcfce7';
+            registerMsg.style.color = isError ? '#b91c1c' : '#15803d';
+            registerMsg.style.border = isError ? '1px solid #fca5a5' : '1px solid #86efac';
+            registerMsg.textContent = text;
+        }
+
+        function saveUserLocally(userData) {
+            const localUsers = JSON.parse(localStorage.getItem('uniagro_users') || '[]');
+            const existsIndex = localUsers.findIndex(u =>
+                (userData.telefono && u.telefono === userData.telefono) ||
+                (userData.email && u.email && u.email.toLowerCase() === userData.email.toLowerCase())
+            );
+            if (existsIndex >= 0) {
+                localUsers[existsIndex] = userData;
+            } else {
+                localUsers.push(userData);
+            }
+            localStorage.setItem('uniagro_users', JSON.stringify(localUsers));
+            localStorage.setItem('uniagro_current_user', JSON.stringify({
+                uid: userData.uid,
+                ID: userData.ID,
+                nombre: userData.nombre,
+                email: userData.email,
+                telefono: userData.telefono || '',
+                rol: userData.rol
+            }));
+        }
+
+        function generateFirebaseLikeUID() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+            for (let i = 0; i < 28; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
+        }
+
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const nombre = document.getElementById('name').value.trim();
+            const rawPhone = phoneInput ? phoneInput.value.trim() : '';
+            const cleanPhone = normalizePhone(rawPhone);
+            const rawEmail = emailInput ? emailInput.value.trim().toLowerCase() : '';
+            const password = document.getElementById('password').value;
+
+            if (!nombre || !password) {
+                showMessage('❌ Por favor escribe tu nombre y tu clave.', true);
+                return;
+            }
+
+            if (registerMethod === 'phone') {
+                if (!cleanPhone || cleanPhone.length < 7) {
+                    showMessage('❌ Por favor escribe un número de celular o teléfono válido (ej. 3101234567).', true);
+                    return;
+                }
+            } else {
+                if (!rawEmail || !rawEmail.includes('@')) {
+                    showMessage('❌ Por favor escribe un correo electrónico válido.', true);
+                    return;
+                }
+            }
+
+            if (password.length < 6) {
+                showMessage('❌ Tu clave debe tener al menos 6 números o letras.', true);
+                return;
+            }
+
+            // Si se registra por celular, generamos un correo interno para Firebase Auth
+            const authEmail = registerMethod === 'phone'
+                ? `${cleanPhone}@telefono.uniagro.com`
+                : rawEmail;
+            const correoGuardado = registerMethod === 'phone' ? '' : rawEmail;
+            const telefonoGuardado = registerMethod === 'phone' ? cleanPhone : normalizePhone(rawPhone);
+
+            submitBtn.disabled = true;
+            submitBtnText.textContent = 'Creando tu cuenta...';
+            showMessage('Guardando tus datos en Uniagro...', false);
+
+            try {
+                const snapshot = await getDocs(collection(db, "usuarios"));
+                let maxId = 0;
+                let telefonoYaExiste = false;
+                let correoYaExiste = false;
+
+                snapshot.forEach(docSnap => {
+                    const data = docSnap.data();
+                    const docCorreo = (data.Correo || data.email || '').toLowerCase();
+                    const docTel = normalizePhone(data.Telefono || data.telefono || '');
+
+                    if (registerMethod === 'phone' && cleanPhone && (docTel === cleanPhone || docCorreo === authEmail)) {
+                        telefonoYaExiste = true;
+                    }
+                    if (registerMethod === 'email' && rawEmail && docCorreo === rawEmail) {
+                        correoYaExiste = true;
+                    }
+
+                    const currentId = Number(data.ID);
+                    if (!isNaN(currentId) && currentId > maxId) {
+                        maxId = currentId;
+                    }
+                });
+
+                if (telefonoYaExiste) {
+                    submitBtn.disabled = false;
+                    submitBtnText.textContent = 'Crear Mi Cuenta';
+                    showMessage('❌ Este número de celular ya tiene cuenta. Toca "Inicia Sesión aquí" abajo.', true);
+                    return;
+                }
+
+                if (correoYaExiste) {
+                    submitBtn.disabled = false;
+                    submitBtnText.textContent = 'Crear Mi Cuenta';
+                    showMessage('❌ Este correo electrónico ya está registrado. Ve a "Inicia Sesión".', true);
+                    return;
+                }
+
+                const nextId = maxId > 0 ? maxId + 1 : snapshot.size + 1;
+
+                let uid = generateFirebaseLikeUID();
+                try {
+                    const userCredential = await createUserWithEmailAndPassword(auth, authEmail, password);
+                    uid = userCredential.user.uid;
+                    await updateProfile(userCredential.user, { displayName: nombre });
+                } catch (authErr) {
+                    console.warn("Aviso Auth:", authErr.code);
+                }
+
+                const nuevoUsuario = {
+                    Correo: correoGuardado || authEmail,
+                    ID: nextId,
+                    Nombre: nombre,
+                    Rol: selectedRole || "campesino",
+                    Telefono: telefonoGuardado,
+                    Clave: password,
+                    UID: uid
+                };
+
+                await addDoc(collection(db, "usuarios"), nuevoUsuario);
+
+                saveUserLocally({
+                    uid: uid,
+                    ID: nextId,
+                    nombre: nombre,
+                    email: correoGuardado || authEmail,
+                    telefono: telefonoGuardado,
+                    password: password,
+                    rol: selectedRole
+                });
+
+                if (telefonoGuardado) {
+                    localStorage.setItem('uniagro_remember_login', telefonoGuardado);
+                }
+
+                const isBuyer = (selectedRole || '').toLowerCase() === 'comprador';
+                const targetPage = isBuyer ? 'marketplace.html' : 'dashboard.html';
+
+                showMessage(`✅ ¡Bienvenido(a) ${nombre}! Tu cuenta ha sido creada. Entrando...`, false);
+                setTimeout(() => {
+                    window.location.href = targetPage;
+                }, 800);
+
+            } catch (error) {
+                console.error("Error en el registro:", error);
+                submitBtn.disabled = false;
+                submitBtnText.textContent = 'Crear Mi Cuenta';
+                showMessage('❌ Error al conectar con la base de datos: ' + (error.message || 'Inténtalo de nuevo.'), true);
+            }
+        });
+    </script>
+</body>
+</html>

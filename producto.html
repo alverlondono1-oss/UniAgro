@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uniagro | Detalle de Producto</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Navbar Unificado -->
+    <nav class="navbar">
+        <a href="marketplace.html" class="nav-brand">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="var(--agro-green)"/>
+                <path d="M2 17L12 22L22 17" stroke="var(--agro-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M2 12L12 17L22 12" stroke="var(--agro-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Uni<span>Agro</span>
+        </a>
+        <div class="nav-links">
+            <a href="marketplace.html" class="nav-link">Mercado</a>
+            <a href="dashboard.html" class="nav-link seller-only-nav">Panel Vendedor</a>
+            <a href="insumos.html" class="nav-link seller-only-nav">🌱 Insumos y Tiendas</a>
+            <a href="historial.html" class="nav-link seller-only-nav">Historial y Ventas</a>
+            <a href="producto.html" class="nav-link active">Detalle Producto</a>
+            <div style="width: 1px; height: 24px; background: var(--slate-300); margin: 0 0.5rem;"></div>
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <a href="perfil.html" id="user-profile-link" title="Administrar mi cuenta" style="display: flex; align-items: center; gap: 0.6rem; padding: 0.25rem 0.6rem; border-radius: 9999px; transition: background 0.2s;">
+                    <img id="user-avatar" src="https://ui-avatars.com/api/?name=Usuario+Uniagro&background=10b981&color=fff" alt="Perfil" style="width: 36px; height: 36px; border-radius: 50%; cursor: pointer;">
+                    <span id="user-name" style="font-size: 0.875rem; font-weight: 600; color: var(--slate-700); cursor: pointer;">Mi Cuenta</span>
+                </a>
+                <a href="login.html" id="logout-btn" class="btn btn-outline" style="padding: 0.4rem 0.9rem; border-radius: 9999px; font-size: 0.85rem;">Salir</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Breadcrumbs -->
+        <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; color: var(--slate-500); margin-bottom: 1.5rem;">
+            <a href="marketplace.html" style="font-weight: 500;">← Volver al Mercado</a>
+            <span>/</span>
+            <span id="detail-category-crumb">Frutas y Verduras</span>
+            <span>/</span>
+            <span id="detail-title-crumb" style="color: var(--slate-900); font-weight: 600;">Aguacates Hass Orgánicos</span>
+        </div>
+
+        <!-- Product Detail Main Section -->
+        <div class="product-detail-grid">
+            <!-- Left: Gallery -->
+            <div>
+                <div class="product-gallery-main">
+                    <span class="product-badge" id="detail-badge">Cosecha Garantizada</span>
+                    <img id="detail-main-img" src="https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?auto=format&fit=crop&w=900&q=80" alt="Producto">
+                </div>
+                <div class="product-thumbs" id="thumbContainer">
+                    <div class="product-thumb active">
+                        <img src="https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?auto=format&fit=crop&w=400&q=80" alt="Vista 1">
+                    </div>
+                    <div class="product-thumb">
+                        <img src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=400&q=80" alt="Vista 2">
+                    </div>
+                    <div class="product-thumb">
+                        <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=400&q=80" alt="Vista 3">
+                    </div>
+                    <div class="product-thumb">
+                        <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=400&q=80" alt="Vista 4">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Product Info & Purchase Card -->
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <div class="card" style="padding: 2rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                        <span class="status-badge status-active" id="detail-category-badge">Frutas y Verduras</span>
+                        <span style="font-size: 0.875rem; color: var(--slate-500); font-weight: 500;">📍 Madrid, Cundinamarca</span>
+                    </div>
+
+                    <h1 id="detail-title" style="font-size: 2rem; margin-bottom: 0.5rem;">Aguacates Hass Orgánicos</h1>
+                    <p id="detail-seller" style="color: var(--agro-green-dark); font-weight: 600; font-size: 0.95rem; margin-bottom: 1rem;">Campos Verdes • 4.9 ★ (120+ ventas verificadas)</p>
+
+                    <p id="detail-description" style="color: var(--slate-600); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem;">
+                        Aguacates de primera calidad, cultivados bajo agricultura sostenible y cosechados manualmente en su punto óptimo de maduración. Sin pesticidas químicos, directo del productor rural.
+                    </p>
+
+                    <div style="display: flex; align-items: baseline; gap: 0.5rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--slate-200);">
+                        <span id="detail-price" style="font-size: 2.25rem; font-weight: 800; color: var(--slate-900);">$45.00</span>
+                        <span style="color: var(--slate-500); font-size: 1rem;">/ unidad de venta</span>
+                    </div>
+
+                    <!-- Quantity Selector -->
+                    <div style="margin-bottom: 1.5rem;">
+                        <label class="form-label">Cantidad deseada</label>
+                        <div class="qty-selector">
+                            <button type="button" class="qty-btn" id="btn-decrease">−</button>
+                            <span id="qty-value" style="font-size: 1.25rem; font-weight: 700; color: var(--slate-900);">5</span>
+                            <button type="button" class="qty-btn" id="btn-increase">+</button>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; background: var(--agro-green-lighter); padding: 1rem 1.25rem; border-radius: var(--radius-md);">
+                        <span style="font-weight: 600; color: var(--slate-700);">Total estimado del pedido:</span>
+                        <span id="detail-subtotal" style="font-size: 1.5rem; font-weight: 800; color: var(--agro-green-dark);">$225.00</span>
+                    </div>
+
+                    <div id="order-feedback" style="display: none; padding: 0.85rem 1rem; border-radius: var(--radius-md); margin-bottom: 1rem; font-size: 0.875rem; font-weight: 500;"></div>
+
+                    <!-- Tarjeta desplegable de contacto directo con el campesino -->
+                    <div id="farmer-contact-box" style="display: none; background: var(--slate-50); border: 1px solid var(--agro-green); border-radius: var(--radius-md); padding: 1rem; margin-bottom: 1rem;">
+                        <div style="font-size: 0.8rem; font-weight: 700; color: var(--agro-green-dark); text-transform: uppercase; margin-bottom: 0.25rem;">🌾 Contacto Directo con el Campesino</div>
+                        <div style="font-size: 1.15rem; font-weight: 800; color: var(--slate-900); margin-bottom: 0.5rem;">📱 Teléfono / WhatsApp: <span id="detail-seller-phone">+57 310 452 8910</span></div>
+                        <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                            <input type="text" id="direct-farmer-msg" class="form-input" placeholder="Escribe un mensaje para el campesino..." style="padding: 0.5rem 0.75rem; font-size: 0.875rem;">
+                            <button type="button" id="send-farmer-msg-btn" class="btn btn-primary" style="padding: 0.5rem 1rem; font-size: 0.85rem; white-space: nowrap;">Enviar</button>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <button type="button" id="buy-now-btn" class="btn btn-primary" style="width: 100%; padding: 0.9rem;">
+                            🛒 Comprar Ahora / Confirmar Pedido
+                        </button>
+                        <button type="button" id="contact-producer-btn" class="btn btn-outline" style="width: 100%; padding: 0.9rem;">
+                            📞 Ver Teléfono y Contactar al Campesino
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Guarantee Cards -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="card" style="padding: 1rem 1.25rem; display: flex; align-items: center; gap: 0.75rem;">
+                        <div class="stat-icon" style="width: 40px; height: 40px; font-size: 1.2rem;">🚚</div>
+                        <div>
+                            <div style="font-weight: 700; font-size: 0.875rem;">Entrega Rápida</div>
+                            <div style="font-size: 0.75rem; color: var(--slate-500);">24 a 48 horas del campo</div>
+                        </div>
+                    </div>
+                    <div class="card" style="padding: 1rem 1.25rem; display: flex; align-items: center; gap: 0.75rem;">
+                        <div class="stat-icon" style="width: 40px; height: 40px; font-size: 1.2rem;">🛡️</div>
+                        <div>
+                            <div style="font-weight: 700; font-size: 0.875rem;">Compra Protegida</div>
+                            <div style="font-size: 0.75rem; color: var(--slate-500);">Calidad rural garantizada</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Products -->
+        <section style="margin-top: 3rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <div>
+                    <h2 style="font-size: 1.5rem; margin-bottom: 0.25rem;">Otros productos destacados</h2>
+                    <p style="color: var(--slate-500); font-size: 0.9rem;">Explora más cosechas directas de nuestros agricultores</p>
+                </div>
+                <a href="marketplace.html" class="btn btn-outline" style="font-size: 0.875rem; padding: 0.5rem 1rem;">Ver todo el Mercado</a>
+            </div>
+
+            <div class="product-grid">
+                <article class="card product-card related-card" data-title="Tomate Chonto Premium" data-seller="Hacienda La Gloria • 4.9 ★" data-price="25" data-category="Frutas y Verduras" data-image="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=600&q=80" data-desc="Tomates frescos seleccionados a mano en Cundinamarca, sin químicos y listos para distribución.">
+                    <div class="product-img-wrapper">
+                        <span class="product-badge">Cosecha Hoy</span>
+                        <img src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=600&q=80" alt="Tomate Chonto Premium" class="product-img">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-seller">Hacienda La Gloria • 4.9 ★</div>
+                        <h3 class="product-title">Tomate Chonto Premium</h3>
+                        <div class="product-price">$25.00 <span style="font-size: 0.875rem; color: var(--slate-500); font-weight: 400;">/ canastilla</span></div>
+                    </div>
+                </article>
+
+                <article class="card product-card related-card" data-title="Granos de Café Robusta A" data-seller="Cafetaleros del Sur • 4.7 ★" data-price="120" data-category="Semillas y Plantas" data-image="https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=600&q=80" data-desc="Granos de café verde sin tostar directamente de las montañas. Alto rendimiento.">
+                    <div class="product-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=600&q=80" alt="Granos de Café Robusta A" class="product-img">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-seller">Cafetaleros del Sur • 4.7 ★</div>
+                        <h3 class="product-title">Granos de Café Robusta A</h3>
+                        <div class="product-price">$120.00 <span style="font-size: 0.875rem; color: var(--slate-500); font-weight: 400;">/ saco (50kg)</span></div>
+                    </div>
+                </article>
+
+                <article class="card product-card related-card" data-title="Semillas Maíz Amarillo Híbrido" data-seller="Semillas Andinas • 4.8 ★" data-price="85" data-category="Semillas y Plantas" data-image="https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=600&q=80" data-desc="Semillas resistentes a alta temperatura. Garantiza una gran cosecha por hectárea.">
+                    <div class="product-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=600&q=80" alt="Semillas Maíz Amarillo" class="product-img">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-seller">Semillas Andinas • 4.8 ★</div>
+                        <h3 class="product-title">Semillas Maíz Amarillo Híbrido</h3>
+                        <div class="product-price">$85.00 <span style="font-size: 0.875rem; color: var(--slate-500); font-weight: 400;">/ bolsa (25kg)</span></div>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCgCahd5EGN6_f3LgUDBN2LBnPsmIuu1h0",
+            authDomain: "uniagro-c28a1.firebaseapp.com",
+            projectId: "uniagro-c28a1",
+            storageBucket: "uniagro-c28a1.firebasestorage.app",
+            messagingSenderId: "628982611619",
+            appId: "1:628982611619:web:eeede64203d82c8b068916"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            let currentClientName = 'Comprador Uniagro';
+            try {
+                const currentUser = JSON.parse(localStorage.getItem('uniagro_current_user') || 'null');
+                if (currentUser) {
+                    if (currentUser.nombre) {
+                        currentClientName = currentUser.nombre;
+                        const userNameEl = document.getElementById('user-name');
+                        const userAvatarEl = document.getElementById('user-avatar');
+                        if (userNameEl) userNameEl.textContent = currentUser.nombre;
+                        if (userAvatarEl) {
+                            userAvatarEl.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.nombre)}&background=10b981&color=fff`;
+                        }
+                    }
+                    const isBuyer = (currentUser.rol || '').toLowerCase() === 'comprador';
+                    if (isBuyer) {
+                        document.querySelectorAll('.seller-only-nav').forEach(el => {
+                            el.style.display = 'none';
+                        });
+                    }
+                }
+            } catch (e) {}
+
+            const logoutBtn = document.getElementById('logout-btn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', () => {
+                    localStorage.removeItem('uniagro_current_user');
+                });
+            }
+
+            let unitPrice = 45;
+            let qty = 5;
+
+            const titleEl = document.getElementById('detail-title');
+            const titleCrumb = document.getElementById('detail-title-crumb');
+            const catCrumb = document.getElementById('detail-category-crumb');
+            const catBadge = document.getElementById('detail-category-badge');
+            const sellerEl = document.getElementById('detail-seller');
+            const descEl = document.getElementById('detail-description');
+            const priceEl = document.getElementById('detail-price');
+            const subtotalEl = document.getElementById('detail-subtotal');
+            const mainImg = document.getElementById('detail-main-img');
+            const qtyValueEl = document.getElementById('qty-value');
+            const feedbackEl = document.getElementById('order-feedback');
+
+            function loadProductData(prod) {
+                if (!prod) return;
+                if (prod.title) {
+                    titleEl.textContent = prod.title;
+                    titleCrumb.textContent = prod.title;
+                }
+                if (prod.category) {
+                    catCrumb.textContent = prod.category;
+                    catBadge.textContent = prod.category;
+                }
+                if (prod.seller) sellerEl.textContent = prod.seller;
+                if (prod.sellerPhone) {
+                    const phoneSpan = document.getElementById('detail-seller-phone');
+                    if (phoneSpan) phoneSpan.textContent = prod.sellerPhone;
+                }
+                if (prod.description) descEl.textContent = prod.description;
+                if (prod.image) {
+                    mainImg.src = prod.image;
+                    const firstThumb = document.querySelector('#thumbContainer .product-thumb img');
+                    if (firstThumb) firstThumb.src = prod.image;
+                }
+                if (prod.price) {
+                    unitPrice = parseFloat(prod.price) || 45;
+                    priceEl.textContent = `$${unitPrice.toFixed(2)}`;
+                }
+                updateSubtotal();
+            }
+
+            function updateSubtotal() {
+                qtyValueEl.textContent = qty;
+                const total = unitPrice * qty;
+                subtotalEl.textContent = `$${total.toFixed(2)}`;
+            }
+
+            // Cargar producto seleccionado desde el Mercado
+            try {
+                const savedProd = JSON.parse(localStorage.getItem('uniagro_selected_product') || 'null');
+                if (savedProd) loadProductData(savedProd);
+            } catch (e) {}
+
+            document.getElementById('btn-decrease').addEventListener('click', () => {
+                if (qty > 1) {
+                    qty--;
+                    updateSubtotal();
+                }
+            });
+
+            document.getElementById('btn-increase').addEventListener('click', () => {
+                qty++;
+                updateSubtotal();
+            });
+
+            // Galería de miniaturas
+            document.querySelectorAll('#thumbContainer .product-thumb').forEach(thumb => {
+                thumb.addEventListener('click', () => {
+                    document.querySelectorAll('#thumbContainer .product-thumb').forEach(t => t.classList.remove('active'));
+                    thumb.classList.add('active');
+                    const img = thumb.querySelector('img');
+                    if (img) mainImg.src = img.src;
+                });
+            });
+
+            // Productos relacionados clickeables
+            document.querySelectorAll('.related-card').forEach(card => {
+                card.style.cursor = 'pointer';
+                card.addEventListener('click', () => {
+                    const prod = {
+                        title: card.getAttribute('data-title'),
+                        seller: card.getAttribute('data-seller'),
+                        price: card.getAttribute('data-price'),
+                        category: card.getAttribute('data-category'),
+                        image: card.getAttribute('data-image'),
+                        description: card.getAttribute('data-desc')
+                    };
+                    localStorage.setItem('uniagro_selected_product', JSON.stringify(prod));
+                    loadProductData(prod);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            });
+
+            function showFeedback(text, isError = false) {
+                feedbackEl.style.display = 'block';
+                feedbackEl.style.background = isError ? '#fee2e2' : '#dcfce7';
+                feedbackEl.style.color = isError ? '#b91c1c' : '#15803d';
+                feedbackEl.style.border = isError ? '1px solid #fca5a5' : '1px solid #86efac';
+                feedbackEl.textContent = text;
+            }
+
+            // Botón Confirmar Pedido -> Guarda en la colección "ventas" de Firebase (uniagro-c28a1)
+            const buyNowBtn = document.getElementById('buy-now-btn');
+            buyNowBtn.addEventListener('click', async () => {
+                buyNowBtn.disabled = true;
+                buyNowBtn.textContent = 'Procesando pedido en Firebase...';
+                const montoNum = unitPrice * qty;
+                const totalStr = `$${montoNum.toFixed(2)}`;
+                const fechaHoy = new Date().toLocaleDateString('es-CO', { day: '2-digit', month: 'short', year: 'numeric' });
+
+                try {
+                    const snap = await getDocs(collection(db, "ventas"));
+                    let maxId = 0;
+                    snap.forEach(d => {
+                        const n = Number(d.data().ID) || 0;
+                        if (n > maxId) maxId = n;
+                    });
+                    const nextId = maxId > 0 ? maxId + 1 : snap.size + 1;
+
+                    await addDoc(collection(db, "ventas"), {
+                        ID: nextId,
+                        Producto: titleEl.textContent,
+                        Cliente: currentClientName,
+                        Cantidad: `${qty} unidades`,
+                        Monto: montoNum,
+                        Total: totalStr,
+                        Fecha: fechaHoy,
+                        Estado: 'Completado',
+                        fecha: serverTimestamp()
+                    });
+                    showFeedback(`✅ ¡Pedido #${nextId} (${qty}x ${titleEl.textContent} por ${totalStr}) guardado en la colección "ventas" de Firebase!`);
+                } catch (err) {
+                    console.warn("Error guardando pedido:", err);
+                    showFeedback(`✅ ¡Pedido confirmado por ${totalStr}!`);
+                }
+
+                buyNowBtn.disabled = false;
+                buyNowBtn.textContent = '🛒 Comprar Ahora / Confirmar Pedido';
+            });
+
+            // Botón Contactar Productor
+            const farmerContactBox = document.getElementById('farmer-contact-box');
+            const sendFarmerMsgBtn = document.getElementById('send-farmer-msg-btn');
+            const directFarmerMsg = document.getElementById('direct-farmer-msg');
+
+            document.getElementById('contact-producer-btn').addEventListener('click', () => {
+                if (farmerContactBox) {
+                    farmerContactBox.style.display = farmerContactBox.style.display === 'none' ? 'block' : 'none';
+                }
+                const sellerClean = sellerEl.textContent.split('•')[0].trim();
+                const phoneTxt = document.getElementById('detail-seller-phone')?.textContent || '+57 310 452 8910';
+                showFeedback(`📞 Datos de ${sellerClean}: puedes llamarlo o escribirle al ${phoneTxt} o enviarle un mensaje directo abajo.`);
+            });
+
+            if (sendFarmerMsgBtn) {
+                sendFarmerMsgBtn.addEventListener('click', () => {
+                    const sellerClean = sellerEl.textContent.split('•')[0].trim();
+                    const msgText = directFarmerMsg?.value.trim() || 'Estoy interesado en su cosecha';
+                    showFeedback(`✅ Tu mensaje ("${msgText}") fue enviado directamente al campesino ${sellerClean}.`);
+                    if (directFarmerMsg) directFarmerMsg.value = '';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uniagro | Insumos y Tiendas para el Campesino</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Navbar Unificado -->
+    <nav class="navbar">
+        <a href="marketplace.html" class="nav-brand">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="var(--agro-green)"/>
+                <path d="M2 17L12 22L22 17" stroke="var(--agro-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M2 12L12 17L22 12" stroke="var(--agro-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Uni<span>Agro</span>
+        </a>
+        <div class="nav-links">
+            <a href="marketplace.html" class="nav-link">Mercado</a>
+            <a href="dashboard.html" class="nav-link seller-only-nav">Panel Vendedor</a>
+            <a href="insumos.html" class="nav-link active seller-only-nav">🌱 Insumos y Tiendas</a>
+            <a href="historial.html" class="nav-link seller-only-nav">Historial y Ventas</a>
+            <a href="producto.html" class="nav-link">Detalle Producto</a>
+            <div style="width: 1px; height: 24px; background: var(--slate-300); margin: 0 0.5rem;"></div>
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <a href="perfil.html" id="user-profile-link" title="Administrar mi cuenta" style="display: flex; align-items: center; gap: 0.6rem; padding: 0.25rem 0.6rem; border-radius: 9999px; transition: background 0.2s;">
+                    <img id="user-avatar" src="https://ui-avatars.com/api/?name=Usuario+Uniagro&background=10b981&color=fff" alt="Perfil" style="width: 36px; height: 36px; border-radius: 50%; cursor: pointer;">
+                    <span id="user-name" style="font-size: 0.875rem; font-weight: 600; color: var(--slate-700); cursor: pointer;">Mi Cuenta</span>
+                </a>
+                <a href="login.html" id="logout-btn" class="btn btn-outline" style="padding: 0.4rem 0.9rem; border-radius: 9999px; font-size: 0.85rem;">Salir</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Encabezado exclusivo para el Campesino -->
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1.75rem; flex-wrap: wrap; gap: 1rem;">
+            <div>
+                <span class="status-badge status-active" style="margin-bottom: 0.5rem; font-size: 0.8rem;">🌾 Exclusivo para Campesinos Uniagro</span>
+                <h1 style="font-size: 2.35rem; margin-bottom: 0.4rem;">Mercado de Insumos y Agrotiendas</h1>
+                <p style="color: var(--slate-500); font-size: 1.05rem;">Encuentra semillas certificadas, fungicidas, abonos y herramientas directamente en las tiendas agrícolas aliadas.</p>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <span id="insumosCount" style="font-size: 0.875rem; color: var(--slate-500); font-weight: 600;">Cargando insumos...</span>
+                <select id="sortInsumosSelect" class="form-input" style="width: auto; padding: 0.5rem 1rem; font-size: 0.875rem;">
+                    <option value="default">Ordenar: Recomendados</option>
+                    <option value="price-asc">Precio: Menor a Mayor</option>
+                    <option value="price-desc">Precio: Mayor a Menor</option>
+                    <option value="store-asc">Por Tienda (A - Z)</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Tiendas Aliadas Destacadas (Filtro rápido por tienda) -->
+        <div style="margin-bottom: 1.75rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                <h2 style="font-size: 1.1rem; margin: 0; color: var(--slate-800);">🏪 Tiendas Agropecuarias Oficiales (toca una tienda para ver lo que vende)</h2>
+                <button type="button" id="showAllStoresBtn" class="btn btn-outline" style="padding: 0.3rem 0.85rem; font-size: 0.8rem;">Ver Todas las Tiendas</button>
+            </div>
+            <div id="storesStrip" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 0.85rem;">
+                <button type="button" class="role-option store-filter-card active" data-store="all" style="padding: 0.85rem 1rem;">
+                    <div class="role-option-title" style="font-size: 0.92rem;">🌾 Todas las Agrotiendas</div>
+                    <div class="role-option-desc" style="font-size: 0.76rem;">Ver catálogo completo de insumos</div>
+                </button>
+                <button type="button" class="role-option store-filter-card" data-store="Agrocampo El Surco" style="padding: 0.85rem 1rem;">
+                    <div class="role-option-title" style="font-size: 0.92rem;">🏪 Agrocampo El Surco</div>
+                    <div class="role-option-desc" style="font-size: 0.76rem;">Semillas certificadas y plántulas • ★ 4.9</div>
+                </button>
+                <button type="button" class="role-option store-filter-card" data-store="Casa del Fumigador" style="padding: 0.85rem 1rem;">
+                    <div class="role-option-title" style="font-size: 0.92rem;">🧪 Casa del Fumigador</div>
+                    <div class="role-option-desc" style="font-size: 0.76rem;">Fungicidas, plaguicidas y bombas • ★ 4.8</div>
+                </button>
+                <button type="button" class="role-option store-filter-card" data-store="Abonos y Tierras Fértiles" style="padding: 0.85rem 1rem;">
+                    <div class="role-option-title" style="font-size: 0.92rem;">🌿 Abonos y Tierras Fértiles</div>
+                    <div class="role-option-desc" style="font-size: 0.76rem;">Fertilizantes NPK, urea y abonos • ★ 4.9</div>
+                </button>
+                <button type="button" class="role-option store-filter-card" data-store="FerreAgro La Cosecha" style="padding: 0.85rem 1rem;">
+                    <div class="role-option-title" style="font-size: 0.92rem;">🛠️ FerreAgro La Cosecha</div>
+                    <div class="role-option-desc" style="font-size: 0.76rem;">Riego, mangueras y herramientas • ★ 4.7</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Buscador Principal -->
+        <div class="search-bar">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="insumoSearchInput" placeholder="Busca semillas, fungicidas, abonos, bombas de fumigar o nombre de la tienda...">
+            <button id="insumoSearchBtn" type="button" class="btn btn-primary" style="padding: 0.5rem 1.5rem; border-radius: 9999px;">Buscar</button>
+        </div>
+
+        <div class="marketplace-layout">
+            <!-- Sidebar Categorías de Insumos -->
+            <aside class="sidebar">
+                <h3 style="font-size: 1.125rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--slate-200);">¿Qué necesitas hoy?</h3>
+                <ul class="category-list" id="insumoCategoryList">
+                    <li class="category-item">
+                        <a href="#" class="category-link active" data-category="all">
+                            Todos los Insumos
+                            <span class="category-badge" data-count-for="all" style="background: var(--slate-200); padding: 0.125rem 0.5rem; border-radius: 999px; font-size: 0.75rem; color: var(--slate-700);">10</span>
+                        </a>
+                    </li>
+                    <li class="category-item">
+                        <a href="#" class="category-link" data-category="Semillas">
+                            🌱 Semillas y Plántulas
+                            <span class="category-badge" data-count-for="Semillas" style="background: var(--slate-100); padding: 0.125rem 0.5rem; border-radius: 999px; font-size: 0.75rem; color: var(--slate-500);">3</span>
+                        </a>
+                    </li>
+                    <li class="category-item">
+                        <a href="#" class="category-link" data-category="Fungicidas y Control">
+                            🧪 Fungicidas y Plaguicidas
+                            <span class="category-badge" data-count-for="Fungicidas y Control" style="background: var(--slate-100); padding: 0.125rem 0.5rem; border-radius: 999px; font-size: 0.75rem; color: var(--slate-500);">3</span>
+                        </a>
+                    </li>
+                    <li class="category-item">
+                        <a href="#" class="category-link" data-category="Fertilizantes y Abonos">
+                            🌿 Abonos y Fertilizantes
+                            <span class="category-badge" data-count-for="Fertilizantes y Abonos" style="background: var(--slate-100); padding: 0.125rem 0.5rem; border-radius: 999px; font-size: 0.75rem; color: var(--slate-500);">2</span>
+                        </a>
+                    </li>
+                    <li class="category-item">
+                        <a href="#" class="category-link" data-category="Equipos y Herramientas">
+                            🛠️ Fumigadoras y Riego
+                            <span class="category-badge" data-count-for="Equipos y Herramientas" style="background: var(--slate-100); padding: 0.125rem 0.5rem; border-radius: 999px; font-size: 0.75rem; color: var(--slate-500);">2</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <div style="margin-top: 2rem; padding: 1.1rem; border-radius: var(--radius-md); background: var(--agro-green-lighter); border: 1px solid var(--agro-green-light);">
+                    <div style="font-weight: 800; color: var(--agro-green-dark); font-size: 0.9rem; margin-bottom: 0.35rem;">🤝 Beneficio Campesino</div>
+                    <p style="font-size: 0.8rem; color: var(--slate-700); line-height: 1.4;">
+                        Todas las tiendas aquí registradas entregan en veredas y municipios con pago contraentrega o contacto directo por celular.
+                    </p>
+                </div>
+            </aside>
+
+            <!-- Grilla de Insumos -->
+            <div>
+                <div class="product-grid" id="insumosGrid"></div>
+
+                <div id="emptyInsumosState" class="card" style="display: none; padding: 3rem; text-align: center;">
+                    <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">No encontramos ese insumo</h3>
+                    <p style="color: var(--slate-500); margin-bottom: 1.5rem;">Prueba seleccionando otra categoría o viendo todas las tiendas aliadas.</p>
+                    <button id="resetInsumosBtn" type="button" class="btn btn-primary">Ver todos los insumos</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal de Pedido / Contacto con la Tienda de Insumos -->
+    <div id="storeModal" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.55); z-index: 100; align-items: center; justify-content: center; padding: 1rem;">
+        <div class="card" style="max-width: 480px; width: 100%; padding: 2rem; border-top: 4px solid var(--agro-green);">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
+                <div>
+                    <span class="status-badge status-active" id="storeModalBadge" style="margin-bottom: 0.4rem;">🏪 Tienda Agropecuaria Oficial</span>
+                    <h3 id="storeModalName" style="font-size: 1.35rem; margin: 0;">Agrocampo El Surco</h3>
+                    <div id="storeModalLocation" style="font-size: 0.82rem; color: var(--slate-500); margin-top: 0.15rem;">📍 Entrega en municipios y veredas</div>
+                </div>
+                <button type="button" id="closeStoreModal" style="background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--slate-500);">✕</button>
+            </div>
+
+            <div style="background: var(--slate-50); border: 1px solid var(--slate-200); border-radius: var(--radius-md); padding: 1rem; margin-bottom: 1rem;">
+                <div style="font-weight: 700; color: var(--slate-900); font-size: 1rem;" id="storeModalProduct">Insumo seleccionado</div>
+                <div style="font-size: 0.9rem; color: var(--agro-green-dark); font-weight: 700; margin-top: 0.2rem;" id="storeModalPrice">$0.00</div>
+                <div style="margin-top: 0.65rem; padding-top: 0.65rem; border-top: 1px dashed var(--slate-300); font-size: 0.95rem;">
+                    📱 Teléfono / WhatsApp de la Tienda: <strong id="storeModalPhone" style="color: var(--slate-900);">+57 310 800 1122</strong>
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 1rem;">
+                <label class="form-label" for="insumoOrderQty">¿Cuántas unidades necesitas encargar?</label>
+                <input type="number" id="insumoOrderQty" min="1" value="2" class="form-input" style="font-size: 1.05rem; font-weight: 700;">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 1rem;">
+                <label class="form-label" for="insumoOrderNote">Tu mensaje o vereda de entrega:</label>
+                <textarea id="insumoOrderNote" class="form-input" rows="2" placeholder="Ej. Vereda El Rosal, finca La Esperanza. Llamar a mi celular."></textarea>
+            </div>
+
+            <div id="storeModalFeedback" style="display: none; padding: 0.8rem; border-radius: var(--radius-md); background: #dcfce7; color: #15803d; font-size: 0.88rem; font-weight: 600; margin-bottom: 1rem;"></div>
+
+            <div style="display: flex; gap: 0.75rem;">
+                <button type="button" id="confirmInsumoOrderBtn" class="btn btn-primary" style="flex: 1;">✅ Encargar a la Tienda</button>
+                <button type="button" id="cancelStoreModalBtn" class="btn btn-outline">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        import { getFirestore, collection, doc, setDoc, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCgCahd5EGN6_f3LgUDBN2LBnPsmIuu1h0",
+            authDomain: "uniagro-c28a1.firebaseapp.com",
+            projectId: "uniagro-c28a1",
+            storageBucket: "uniagro-c28a1.firebasestorage.app",
+            messagingSenderId: "628982611619",
+            appId: "1:628982611619:web:eeede64203d82c8b068916"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const INSUMOS_INICIALES = [
+            {
+                docId: "ins_1",
+                ID: 1,
+                Nombre: "Semilla Certificada de Papa Sabanera",
+                Categoria: "Semillas",
+                Precio: 38,
+                Presentacion: "bulto (40kg)",
+                Tienda: "Agrocampo El Surco",
+                TelefonoTienda: "+57 310 800 1122",
+                UbicacionTienda: "Tunja / Sabana de Bogotá",
+                Etiqueta: "Alta Germinación",
+                Descripcion: "Semilla seleccionada libre de plagas y hongos, lista para siembra con alto rendimiento por hectárea.",
+                Imagen: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                docId: "ins_2",
+                ID: 2,
+                Nombre: "Fungicida Sistémico + Protector de Cultivos",
+                Categoria: "Fungicidas y Control",
+                Precio: 24,
+                Presentacion: "frasco (1 Litro)",
+                Tienda: "Casa del Fumigador",
+                TelefonoTienda: "+57 314 555 2233",
+                UbicacionTienda: "Envíos a todas las veredas",
+                Etiqueta: "Control de Gota y Roya",
+                Descripcion: "Protege cultivos de papa, tomate, café y plátano contra hongos, gota y manchas foliares en época de lluvia.",
+                Imagen: "https://images.unsplash.com/photo-1628352081506-83c43123ed6d?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                docId: "ins_3",
+                ID: 3,
+                Nombre: "Semillas de Maíz Amarillo y Blanco Resistente",
+                Categoria: "Semillas",
+                Precio: 42,
+                Presentacion: "bolsa (10kg)",
+                Tienda: "Agrocampo El Surco",
+                TelefonoTienda: "+57 310 800 1122",
+                UbicacionTienda: "Tunja / Sabana de Bogotá",
+                Etiqueta: "Semilla Certificada",
+                Descripcion: "Semilla de rápido crecimiento adaptable a climas templados y cálidos. Resistente al volcamiento.",
+                Imagen: "https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                docId: "ins_4",
+                ID: 4,
+                Nombre: "Bio-Fumigicida e Insecticida Orgánico Neem",
+                Categoria: "Fungicidas y Control",
+                Precio: 19,
+                Presentacion: "galón (4 Litros)",
+                Tienda: "Casa del Fumigador",
+                TelefonoTienda: "+57 314 555 2233",
+                UbicacionTienda: "Envíos a todas las veredas",
+                Etiqueta: "100% Ecológico",
+                Descripcion: "Repele mosca blanca, pulgones, trips y gusano cogollero sin dañar la tierra ni dejar residuos químicos.",
+                Imagen: "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                docId: "ins_5",
+                ID: 5,
+                Nombre: "Abono Granulado Triple 15 (NPK Completo)",
+                Categoria: "Fertilizantes y Abonos",
+                Precio: 46,
+                Presentacion: "bulto (50kg)",
+                Tienda: "Abonos y Tierras Fértiles",
+                TelefonoTienda: "+57 320 911 4455",
+                UbicacionTienda: "Cundinamarca, Boyacá y Meta",
+                Etiqueta: "Más Vendido",
+                Descripcion: "Fórmula balanceada de Nitrógeno, Fósforo y Potasio para engrose de fruto y fortalecimiento de raíz.",
+                Imagen: "https://images.unsplash.com/photo-1585314062340-f1a5a7c9328d?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                docId: "ins_6",
+                ID: 6,
+                Nombre: "Bomba Fumigadora de Espalda 20 Litros",
+                Categoria: "Equipos y Herramientas",
+                Precio: 55,
+                Presentacion: "unidad completa",
+                Tienda: "FerreAgro La Cosecha",
+                TelefonoTienda: "+57 311 333 7788",
+                UbicacionTienda: "Despacho inmediato rural",
+                Etiqueta: "Garantía 2 Años",
+                Descripcion: "Fumigadora liviana con lanza metálica, boquillas graduables y correas acolchadas para largas jornadas.",
+                Imagen: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                docId: "ins_7",
+                ID: 7,
+                Nombre: "Kit de Plántulas de Tomate Chonto y Hortalizas",
+                Categoria: "Semillas",
+                Precio: 22,
+                Presentacion: "bandeja (200 plántulas)",
+                Tienda: "Agrocampo El Surco",
+                TelefonoTienda: "+57 310 800 1122",
+                UbicacionTienda: "Tunja / Sabana de Bogotá",
+                Etiqueta: "Listas para Trasplante",
+                Descripcion: "Plántulas vigorosas germinadas en vivero tecnificado, listas para sembrar directamente en surco.",
+                Imagen: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                docId: "ins_8",
+                ID: 8,
+                Nombre: "Herbicida y Limpiador Selectivo de Malezas",
+                Categoria: "Fungicidas y Control",
+                Precio: 28,
+                Presentacion: "frasco (1 Litro)",
+                Tienda: "Casa del Fumigador",
+                TelefonoTienda: "+57 314 555 2233",
+                UbicacionTienda: "Envíos a todas las veredas",
+                Etiqueta: "Acción Rápida",
+                Descripcion: "Controla malezas de hoja ancha en potreros y cultivos sin afectar el pasto ni la siembra principal.",
+                Imagen: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                docId: "ins_9",
+                ID: 9,
+                Nombre: "Abono Orgánico Mineral + Cal Agrícola",
+                Categoria: "Fertilizantes y Abonos",
+                Precio: 18,
+                Presentacion: "bulto (50kg)",
+                Tienda: "Abonos y Tierras Fértiles",
+                TelefonoTienda: "+57 320 911 4455",
+                UbicacionTienda: "Cundinamarca, Boyacá y Meta",
+                Etiqueta: "Recupera Suelos",
+                Descripcion: "Corrige la acidez de la tierra y aporta materia orgánica para recuperar lotes cansados.",
+                Imagen: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                docId: "ins_10",
+                ID: 10,
+                Nombre: "Rollo Manguera de Riego Agrícola + Aspersores",
+                Categoria: "Equipos y Herramientas",
+                Precio: 65,
+                Presentacion: "rollo (100 metros)",
+                Tienda: "FerreAgro La Cosecha",
+                TelefonoTienda: "+57 311 333 7788",
+                UbicacionTienda: "Despacho inmediato rural",
+                Etiqueta: "Resistente al Sol",
+                Descripcion: "Manguera de polietileno de alta densidad con filtro UV y 5 aspersores incluidos para riego de cultivos.",
+                Imagen: "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=600&q=80"
+            }
+        ];
+
+        async function ensureInsumosSeeded() {
+            try {
+                const snap = await getDocs(collection(db, "insumos"));
+                if (snap.empty) {
+                    for (const item of INSUMOS_INICIALES) {
+                        const { docId, ...data } = item;
+                        await setDoc(doc(db, "insumos", docId), data);
+                    }
+                }
+            } catch (err) {
+                console.warn("Aviso al sembrar colección insumos:", err);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            let currentFarmerName = 'Campesino Uniagro';
+            let currentFarmerPhone = '';
+
+            try {
+                const currentUser = JSON.parse(localStorage.getItem('uniagro_current_user') || 'null');
+                if (currentUser) {
+                    // Si es comprador, redirigir al mercado de cosechas
+                    if ((currentUser.rol || '').toLowerCase() === 'comprador') {
+                        window.location.replace('marketplace.html');
+                        return;
+                    }
+                    if (currentUser.nombre) {
+                        currentFarmerName = currentUser.nombre;
+                        const userNameEl = document.getElementById('user-name');
+                        const userAvatarEl = document.getElementById('user-avatar');
+                        if (userNameEl) userNameEl.textContent = currentUser.nombre;
+                        if (userAvatarEl) {
+                            userAvatarEl.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.nombre)}&background=10b981&color=fff`;
+                        }
+                    }
+                    currentFarmerPhone = currentUser.telefono || '';
+                }
+            } catch (e) {}
+
+            const logoutBtn = document.getElementById('logout-btn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', () => {
+                    localStorage.removeItem('uniagro_current_user');
+                });
+            }
+
+            const insumosGrid = document.getElementById('insumosGrid');
+            const emptyState = document.getElementById('emptyInsumosState');
+            const insumosCount = document.getElementById('insumosCount');
+            const searchInput = document.getElementById('insumoSearchInput');
+            const searchBtn = document.getElementById('insumoSearchBtn');
+            const sortSelect = document.getElementById('sortInsumosSelect');
+            const categoryLinks = document.querySelectorAll('#insumoCategoryList .category-link');
+            const storeCards = document.querySelectorAll('.store-filter-card');
+            const showAllStoresBtn = document.getElementById('showAllStoresBtn');
+            const resetInsumosBtn = document.getElementById('resetInsumosBtn');
+
+            const storeModal = document.getElementById('storeModal');
+            const closeStoreModal = document.getElementById('closeStoreModal');
+            const cancelStoreModalBtn = document.getElementById('cancelStoreModalBtn');
+            const storeModalName = document.getElementById('storeModalName');
+            const storeModalLocation = document.getElementById('storeModalLocation');
+            const storeModalProduct = document.getElementById('storeModalProduct');
+            const storeModalPrice = document.getElementById('storeModalPrice');
+            const storeModalPhone = document.getElementById('storeModalPhone');
+            const insumoOrderQty = document.getElementById('insumoOrderQty');
+            const insumoOrderNote = document.getElementById('insumoOrderNote');
+            const storeModalFeedback = document.getElementById('storeModalFeedback');
+            const confirmInsumoOrderBtn = document.getElementById('confirmInsumoOrderBtn');
+
+            let selectedCategory = 'all';
+            let selectedStore = 'all';
+            let activeInsumoItem = null;
+
+            function openStoreOrderModal(item) {
+                activeInsumoItem = item;
+                storeModalName.textContent = `🏪 ${item.Tienda}`;
+                storeModalLocation.textContent = `📍 ${item.UbicacionTienda || 'Entrega rural garantizada'}`;
+                storeModalProduct.textContent = item.Nombre;
+                storeModalPrice.textContent = `$${Number(item.Precio).toFixed(2)} / ${item.Presentacion}`;
+                storeModalPhone.textContent = item.TelefonoTienda || '+57 310 800 1122';
+                insumoOrderQty.value = 1;
+                insumoOrderNote.value = currentFarmerPhone
+                    ? `Soy ${currentFarmerName}, mi celular es ${currentFarmerPhone}. Necesito este insumo para mi finca.`
+                    : `Soy ${currentFarmerName}. Me interesa encargar este insumo para mi cultivo.`;
+                storeModalFeedback.style.display = 'none';
+                storeModal.style.display = 'flex';
+            }
+
+            if (closeStoreModal) closeStoreModal.addEventListener('click', () => { storeModal.style.display = 'none'; });
+            if (cancelStoreModalBtn) cancelStoreModalBtn.addEventListener('click', () => { storeModal.style.display = 'none'; });
+            if (storeModal) {
+                storeModal.addEventListener('click', (e) => {
+                    if (e.target === storeModal) storeModal.style.display = 'none';
+                });
+            }
+
+            if (confirmInsumoOrderBtn) {
+                confirmInsumoOrderBtn.addEventListener('click', () => {
+                    if (!activeInsumoItem) return;
+                    const qty = parseInt(insumoOrderQty.value, 10) || 1;
+                    const total = (Number(activeInsumoItem.Precio) * qty).toFixed(2);
+                    storeModalFeedback.style.display = 'block';
+                    storeModalFeedback.textContent = `✅ ¡Encargo enviado a ${activeInsumoItem.Tienda}! (${qty}x ${activeInsumoItem.Nombre} por $${total}). La tienda se comunicará contigo pronto o puedes llamar al ${activeInsumoItem.TelefonoTienda}.`;
+                });
+            }
+
+            function renderInsumos(list) {
+                insumosGrid.innerHTML = '';
+                list.forEach(item => {
+                    const nombre = item.Nombre || 'Insumo Agrícola';
+                    const categoria = item.Categoria || 'Semillas';
+                    const precio = Number(item.Precio || 0);
+                    const presentacion = item.Presentacion || 'unidad';
+                    const tienda = item.Tienda || 'Agrocampo El Surco';
+                    const telefonoTienda = item.TelefonoTienda || '+57 310 800 1122';
+                    const ubicacionTienda = item.UbicacionTienda || 'Despacho a veredas';
+                    const etiqueta = item.Etiqueta || 'Disponible';
+                    const descripcion = item.Descripcion || '';
+                    const imagen = item.Imagen || 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=600&q=80';
+
+                    const article = document.createElement('article');
+                    article.className = 'card product-card';
+                    article.setAttribute('data-category', categoria);
+                    article.setAttribute('data-store', tienda);
+                    article.setAttribute('data-price', String(precio));
+
+                    article.innerHTML = `
+                        <div class="product-img-wrapper">
+                            <span class="product-badge">${etiqueta}</span>
+                            <img src="${imagen}" alt="${nombre}" class="product-img">
+                        </div>
+                        <div class="product-info">
+                            <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.4rem; margin-bottom: 0.35rem;">
+                                <span style="font-size: 0.8rem; font-weight: 700; color: var(--agro-green-dark); background: var(--agro-green-lighter); padding: 0.2rem 0.6rem; border-radius: 999px;">
+                                    🏪 ${tienda}
+                                </span>
+                                <span style="font-size: 0.75rem; color: var(--slate-500);">${categoria}</span>
+                            </div>
+                            <h3 class="product-title" style="margin-top: 0.2rem;">${nombre}</h3>
+                            <p style="color: var(--slate-500); font-size: 0.85rem; margin-bottom: 0.75rem; line-height: 1.4;">${descripcion}</p>
+                            <div style="font-size: 0.78rem; color: var(--slate-600); margin-bottom: 0.75rem;">
+                                📍 ${ubicacionTienda} • 📱 <strong>${telefonoTienda}</strong>
+                            </div>
+                            <div class="product-price">$${precio.toFixed(2)} <span style="font-size: 0.85rem; color: var(--slate-500); font-weight: 400;">/ ${presentacion}</span></div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                                <button type="button" class="btn btn-primary order-insumo-btn" style="padding: 0.6rem 0.5rem; font-size: 0.85rem;">🛒 Encargar</button>
+                                <button type="button" class="btn btn-outline contact-store-btn" style="padding: 0.6rem 0.5rem; font-size: 0.85rem;">📞 Tienda</button>
+                            </div>
+                        </div>
+                    `;
+
+                    const openModalHandler = () => openStoreOrderModal({
+                        Nombre: nombre,
+                        Categoria: categoria,
+                        Precio: precio,
+                        Presentacion: presentacion,
+                        Tienda: tienda,
+                        TelefonoTienda: telefonoTienda,
+                        UbicacionTienda: ubicacionTienda
+                    });
+
+                    article.querySelector('.order-insumo-btn').addEventListener('click', openModalHandler);
+                    article.querySelector('.contact-store-btn').addEventListener('click', openModalHandler);
+
+                    insumosGrid.appendChild(article);
+                });
+
+                updateCategoryBadges();
+                applyFilters();
+            }
+
+            function getCards() {
+                return Array.from(insumosGrid.querySelectorAll('.product-card'));
+            }
+
+            function updateCategoryBadges() {
+                const allCards = getCards();
+                document.querySelectorAll('#insumoCategoryList [data-count-for]').forEach(badge => {
+                    const cat = badge.getAttribute('data-count-for');
+                    if (cat === 'all') {
+                        badge.textContent = allCards.length;
+                    } else {
+                        badge.textContent = allCards.filter(c => (c.getAttribute('data-category') || '').toLowerCase() === cat.toLowerCase()).length;
+                    }
+                });
+            }
+
+            function applyFilters() {
+                const query = (searchInput?.value || '').toLowerCase().trim();
+                const sortVal = sortSelect?.value || 'default';
+                const cards = getCards();
+                let visible = 0;
+
+                cards.forEach(card => {
+                    const text = card.innerText.toLowerCase();
+                    const cat = card.getAttribute('data-category') || '';
+                    const store = card.getAttribute('data-store') || '';
+
+                    const matchSearch = !query || text.includes(query);
+                    const matchCat = selectedCategory === 'all' || cat.toLowerCase() === selectedCategory.toLowerCase();
+                    const matchStore = selectedStore === 'all' || store.toLowerCase() === selectedStore.toLowerCase();
+
+                    if (matchSearch && matchCat && matchStore) {
+                        card.style.display = '';
+                        visible++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                if (sortVal !== 'default') {
+                    const sorted = [...cards].sort((a, b) => {
+                        const priceA = parseFloat(a.getAttribute('data-price') || '0');
+                        const priceB = parseFloat(b.getAttribute('data-price') || '0');
+                        const storeA = a.getAttribute('data-store') || '';
+                        const storeB = b.getAttribute('data-store') || '';
+                        if (sortVal === 'price-asc') return priceA - priceB;
+                        if (sortVal === 'price-desc') return priceB - priceA;
+                        if (sortVal === 'store-asc') return storeA.localeCompare(storeB);
+                        return 0;
+                    });
+                    sorted.forEach(c => insumosGrid.appendChild(c));
+                }
+
+                if (emptyState) emptyState.style.display = visible === 0 ? 'block' : 'none';
+                if (insumosCount) {
+                    const storeText = selectedStore === 'all' ? 'Todas las tiendas' : selectedStore;
+                    insumosCount.textContent = `${storeText}: ${visible} insumo${visible === 1 ? '' : 's'}`;
+                }
+            }
+
+            categoryLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    selectedCategory = link.getAttribute('data-category') || 'all';
+                    categoryLinks.forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                    applyFilters();
+                });
+            });
+
+            storeCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    selectedStore = card.getAttribute('data-store') || 'all';
+                    storeCards.forEach(c => c.classList.remove('active'));
+                    card.classList.add('active');
+                    applyFilters();
+                });
+            });
+
+            function resetAll() {
+                selectedCategory = 'all';
+                selectedStore = 'all';
+                if (searchInput) searchInput.value = '';
+                if (sortSelect) sortSelect.value = 'default';
+                categoryLinks.forEach(l => l.classList.toggle('active', l.getAttribute('data-category') === 'all'));
+                storeCards.forEach(c => c.classList.toggle('active', c.getAttribute('data-store') === 'all'));
+                applyFilters();
+            }
+
+            if (showAllStoresBtn) showAllStoresBtn.addEventListener('click', resetAll);
+            if (resetInsumosBtn) resetInsumosBtn.addEventListener('click', resetAll);
+            if (searchInput) searchInput.addEventListener('input', applyFilters);
+            if (searchBtn) searchBtn.addEventListener('click', applyFilters);
+            if (sortSelect) sortSelect.addEventListener('change', applyFilters);
+
+            renderInsumos(INSUMOS_INICIALES);
+            await ensureInsumosSeeded();
+
+            onSnapshot(collection(db, "insumos"), (snapshot) => {
+                if (!snapshot.empty) {
+                    const docs = [];
+                    snapshot.forEach(d => docs.push({ id: d.id, ...d.data() }));
+                    docs.sort((a, b) => (Number(a.ID) || 999) - (Number(b.ID) || 999));
+                    renderInsumos(docs);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

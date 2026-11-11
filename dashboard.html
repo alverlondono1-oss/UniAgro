@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uniagro | Panel Vendedor</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Navbar Unificado -->
+    <nav class="navbar">
+        <a href="marketplace.html" class="nav-brand">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="var(--agro-green)"/>
+                <path d="M2 17L12 22L22 17" stroke="var(--agro-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M2 12L12 17L22 12" stroke="var(--agro-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Uni<span>Agro</span>
+        </a>
+        <div class="nav-links">
+            <a href="marketplace.html" class="nav-link">Mercado</a>
+            <a href="dashboard.html" class="nav-link active seller-only-nav">Panel Vendedor</a>
+            <a href="insumos.html" class="nav-link seller-only-nav">🌱 Insumos y Tiendas</a>
+            <a href="historial.html" class="nav-link seller-only-nav">Historial y Ventas</a>
+            <a href="producto.html" class="nav-link">Detalle Producto</a>
+            <div style="width: 1px; height: 24px; background: var(--slate-300); margin: 0 0.5rem;"></div>
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <a href="perfil.html" id="user-profile-link" title="Administrar mi cuenta" style="display: flex; align-items: center; gap: 0.6rem; padding: 0.25rem 0.6rem; border-radius: 9999px; transition: background 0.2s;">
+                    <img id="user-avatar" src="https://ui-avatars.com/api/?name=Usuario+Uniagro&background=10b981&color=fff" alt="Perfil" style="width: 36px; height: 36px; border-radius: 50%; cursor: pointer;">
+                    <span id="user-name" style="font-size: 0.875rem; font-weight: 600; color: var(--slate-700); cursor: pointer;">Mi Cuenta</span>
+                </a>
+                <a href="login.html" id="logout-btn" class="btn btn-outline" style="padding: 0.4rem 0.9rem; border-radius: 9999px; font-size: 0.85rem;">Salir</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem;">
+            <div>
+                <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">Resumen del Panel</h1>
+                <p style="color: var(--slate-500); font-size: 1.125rem;">Maneja tu inventario en tiempo real, sigue tus ventas y crea publicaciones nuevas.</p>
+            </div>
+            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                <a href="insumos.html" class="btn btn-outline" style="border-color: var(--agro-green); color: var(--agro-green-dark); background: var(--agro-green-lighter);">🌱 Comprar Semillas, Fungicidas e Insumos</a>
+                <a href="historial.html" class="btn btn-outline">Ver Historial de Ventas</a>
+                <a href="marketplace.html" class="btn btn-primary">Ir al Mercado</a>
+            </div>
+        </div>
+
+        <!-- High-level Stats -->
+        <div class="dashboard-stats">
+            <div class="card stat-card">
+                <div class="stat-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                </div>
+                <div>
+                    <div class="stat-label">Ingresos por Ventas (Firebase)</div>
+                    <div class="stat-value" id="dashRevenueStat">$4,730.00</div>
+                    <div style="font-size: 0.75rem; color: var(--agro-green); font-weight: 600; margin-top: 0.25rem;">✓ Sincronizado con "ventas"</div>
+                </div>
+            </div>
+            <div class="card stat-card">
+                <div class="stat-icon" style="background: var(--slate-100); color: var(--slate-700);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                </div>
+                <div>
+                    <div class="stat-label">Ventas Registradas</div>
+                    <div class="stat-value" id="dashSalesCountStat">4</div>
+                    <div style="font-size: 0.75rem; color: var(--slate-500); font-weight: 500; margin-top: 0.25rem;">Ver en Historial y Ventas</div>
+                </div>
+            </div>
+            <div class="card stat-card">
+                <div class="stat-icon" style="background: #fef3c7; color: #d97706;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                </div>
+                <div>
+                    <div class="stat-label">Productos en Base de Datos</div>
+                    <div class="stat-value" id="activeInventoryCount">8</div>
+                    <div style="font-size: 0.75rem; color: var(--agro-green); font-weight: 600; margin-top: 0.25rem;">✓ Colección "productos" activa</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-content">
+            <!-- Left Column: Inventory Table -->
+            <div class="card" style="display: flex; flex-direction: column;">
+                <div style="padding: 1.5rem; border-bottom: 1px solid var(--slate-200); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                    <h2 style="font-size: 1.25rem; margin: 0;">Gestión de Inventario (Firebase)</h2>
+                    <div class="search-bar" style="margin: 0; padding: 0.25rem 0.75rem; border-radius: var(--radius-md);">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="text" id="dashSearchInput" placeholder="Buscar en mi inventario..." style="font-size: 0.875rem;">
+                    </div>
+                </div>
+                <div style="overflow-x: auto;">
+                    <table class="table-styled">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre del Producto</th>
+                                <th>Categoría</th>
+                                <th>Precio</th>
+                                <th>Inventario</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventoryTableBody"></tbody>
+                    </table>
+                </div>
+                <div style="padding: 1rem 1.5rem; border-top: 1px solid var(--slate-200); display: flex; justify-content: space-between; align-items: center; background: var(--slate-50); color: var(--slate-500); font-size: 0.875rem;">
+                    <span id="tableCountText">Sincronizando con Firebase...</span>
+                </div>
+            </div>
+
+            <!-- Right Column: Quick Actions / Form -->
+            <div class="card" style="height: fit-content; border-top: 4px solid var(--agro-green);">
+                <div style="padding: 1.5rem; border-bottom: 1px solid var(--slate-200);">
+                    <h2 style="font-size: 1.25rem; margin: 0;">Crear Nueva Publicación</h2>
+                </div>
+                <div style="padding: 1.5rem;">
+                    <form id="publishProductForm">
+                        <div id="publishMessage" style="display: none; padding: 0.75rem; border-radius: var(--radius-md); margin-bottom: 1rem; font-size: 0.85rem; font-weight: 500;"></div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="prodName">Nombre del Producto</label>
+                            <input type="text" id="prodName" class="form-input" placeholder="ej. Papa Criolla Lavada" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="prodCategory">Categoría</label>
+                            <select id="prodCategory" class="form-input" required>
+                                <option value="Frutas y Verduras">Frutas y Verduras</option>
+                                <option value="Semillas y Plantas">Semillas y Plantas</option>
+                                <option value="Fertilizantes">Fertilizantes</option>
+                                <option value="Maquinaria">Maquinaria</option>
+                                <option value="Ganado">Ganado</option>
+                            </select>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                            <div>
+                                <label class="form-label" for="prodPrice">Precio ($)</label>
+                                <div style="position: relative;">
+                                    <span style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--slate-500);">$</span>
+                                    <input type="number" id="prodPrice" min="1" step="any" class="form-input" style="padding-left: 2rem;" placeholder="45.00" required>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="form-label" for="prodUnit">Unidad de Venta</label>
+                                <input type="text" id="prodUnit" class="form-input" placeholder="ej. caja, bulto, kg" value="bulto (50kg)" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="prodStock">Cantidad Disponible</label>
+                            <input type="number" id="prodStock" min="1" class="form-input" placeholder="ej. 50" value="30" required>
+                        </div>
+
+                        <button type="submit" id="publishBtn" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            Guardar
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        import { getFirestore, collection, doc, setDoc, updateDoc, addDoc, getDocs, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCgCahd5EGN6_f3LgUDBN2LBnPsmIuu1h0",
+            authDomain: "uniagro-c28a1.firebaseapp.com",
+            projectId: "uniagro-c28a1",
+            storageBucket: "uniagro-c28a1.firebasestorage.app",
+            messagingSenderId: "628982611619",
+            appId: "1:628982611619:web:eeede64203d82c8b068916"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const PRODUCTOS_INICIALES = [
+            {
+                docId: "prod_1",
+                ID: 1,
+                Nombre: "Aguacates Hass Orgánicos",
+                Categoria: "Frutas y Verduras",
+                Precio: 45,
+                Unidad: "caja (10kg)",
+                Stock: 120,
+                Estado: "Activo",
+                Etiqueta: "Top Ventas",
+                Vendedor: "Campos Verdes • 4.9 ★",
+                Descripcion: "Aguacates de primera calidad, cultivados de forma sostenible. Ideales para exportación.",
+                Imagen: "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                docId: "prod_2",
+                ID: 2,
+                Nombre: "Granos de Café Robusta A",
+                Categoria: "Semillas y Plantas",
+                Precio: 120,
+                Unidad: "saco (50kg)",
+                Stock: 45,
+                Estado: "Activo",
+                Etiqueta: "Destacado",
+                Vendedor: "Cafetaleros del Sur • 4.7 ★",
+                Descripcion: "Granos de café verde sin tostar directamente de las montañas. Alto rendimiento.",
+                Imagen: "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                docId: "prod_3",
+                ID: 3,
+                Nombre: "Semillas Maíz Amarillo Híbrido",
+                Categoria: "Semillas y Plantas",
+                Precio: 85,
+                Unidad: "bolsa (25kg)",
+                Stock: 25,
+                Estado: "Activo",
+                Etiqueta: "Nuevo",
+                Vendedor: "Semillas Andinas • 4.8 ★",
+                Descripcion: "Semillas resistentes a alta temperatura. Garantiza una gran cosecha por hectárea.",
+                Imagen: "https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                docId: "prod_4",
+                ID: 4,
+                Nombre: "Fertilizante Orgánico",
+                Categoria: "Fertilizantes",
+                Precio: 30,
+                Unidad: "bolsa (20kg)",
+                Stock: 5,
+                Estado: "Stock Bajo",
+                Etiqueta: "Orgánico",
+                Vendedor: "EcoNutrientes SAS • 4.6 ★",
+                Descripcion: "Mezcla de compost 100% natural, especial para mejorar los suelos antes de siembra.",
+                Imagen: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                docId: "prod_5",
+                ID: 5,
+                Nombre: "Tomate Chonto Premium",
+                Categoria: "Frutas y Verduras",
+                Precio: 25,
+                Unidad: "canastilla (22kg)",
+                Stock: 80,
+                Estado: "Activo",
+                Etiqueta: "Cosecha Hoy",
+                Vendedor: "Hacienda La Gloria • 4.9 ★",
+                Descripcion: "Tomates frescos seleccionados a mano en Cundinamarca, sin químicos y listos para distribución.",
+                Imagen: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                docId: "prod_6",
+                ID: 6,
+                Nombre: "Bio-Abono Mineral NPK",
+                Categoria: "Fertilizantes",
+                Precio: 42,
+                Unidad: "bulto (50kg)",
+                Stock: 60,
+                Estado: "Activo",
+                Etiqueta: "Recomendado",
+                Vendedor: "AgroQuímica Verde • 4.8 ★",
+                Descripcion: "Nutrición balanceada de liberación lenta para cultivos de papa, café y frutales.",
+                Imagen: "https://images.unsplash.com/photo-1585314062340-f1a5a7c9328d?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                docId: "prod_7",
+                ID: 7,
+                Nombre: "Motocultor Diésel 10HP",
+                Categoria: "Maquinaria",
+                Precio: 650,
+                Unidad: "unidad",
+                Stock: 8,
+                Estado: "Activo",
+                Etiqueta: "Garantía 1 Año",
+                Vendedor: "Maquinaria del Campo • 4.9 ★",
+                Descripcion: "Ideal para preparación de terreno y arado en parcelas medianas. Bajo consumo de combustible.",
+                Imagen: "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                docId: "prod_8",
+                ID: 8,
+                Nombre: "Novillas Holstein Lecheras",
+                Categoria: "Ganado",
+                Precio: 950,
+                Unidad: "cabeza",
+                Stock: 12,
+                Estado: "Activo",
+                Etiqueta: "Certificado",
+                Vendedor: "Ganadería El Rosal • 5.0 ★",
+                Descripcion: "Ganado bovino con registro sanitario al día y alta producción lechera comprobada.",
+                Imagen: "https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?auto=format&fit=crop&w=600&q=80"
+            }
+        ];
+
+        const IMAGENES_POR_CATEGORIA = {
+            "Frutas y Verduras": "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=80",
+            "Semillas y Plantas": "https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=600&q=80",
+            "Fertilizantes": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=600&q=80",
+            "Maquinaria": "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&w=600&q=80",
+            "Ganado": "https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?auto=format&fit=crop&w=600&q=80"
+        };
+
+        const VENTAS_INICIALES = [
+            {
+                docId: "venta_1",
+                ID: 1,
+                Producto: "Papa Sabanera Premium",
+                Cliente: "Restaurante El Huerto",
+                Cantidad: "15 Bultos",
+                Monto: 1200,
+                Total: "$1,200.00",
+                Fecha: "08 Nov, 2026",
+                Estado: "Completado"
+            },
+            {
+                docId: "venta_2",
+                ID: 2,
+                Producto: "Zanahoria Lavada",
+                Cliente: "Central de Abastos M.",
+                Cantidad: "8 Bultos",
+                Monto: 640,
+                Total: "$640.00",
+                Fecha: "09 Nov, 2026",
+                Estado: "Pendiente"
+            },
+            {
+                docId: "venta_3",
+                ID: 3,
+                Producto: "Cebolla Cabezona Blanca",
+                Cliente: "Supermercados Vida",
+                Cantidad: "20 Canastillas",
+                Monto: 2440,
+                Total: "$2,440.00",
+                Fecha: "09 Nov, 2026",
+                Estado: "Completado"
+            },
+            {
+                docId: "venta_4",
+                ID: 4,
+                Producto: "Aguacates Hass Orgánicos",
+                Cliente: "Distribuidora Del Campo",
+                Cantidad: "10 Cajas",
+                Monto: 450,
+                Total: "$450.00",
+                Fecha: "10 Nov, 2026",
+                Estado: "Completado"
+            }
+        ];
+
+        async function ensureProductsSeeded() {
+            try {
+                const snap = await getDocs(collection(db, "productos"));
+                if (snap.empty) {
+                    for (const item of PRODUCTOS_INICIALES) {
+                        const { docId, ...data } = item;
+                        await setDoc(doc(db, "productos", docId), data);
+                    }
+                }
+            } catch (err) {
+                console.warn("Aviso al sembrar productos iniciales:", err);
+            }
+
+            try {
+                const snapVentas = await getDocs(collection(db, "ventas"));
+                if (snapVentas.empty) {
+                    for (const v of VENTAS_INICIALES) {
+                        const { docId, ...data } = v;
+                        await setDoc(doc(db, "ventas", docId), data);
+                    }
+                }
+            } catch (err) {
+                console.warn("Aviso al sembrar ventas iniciales:", err);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            let currentUserName = 'Productor Uniagro';
+            try {
+                const currentUser = JSON.parse(localStorage.getItem('uniagro_current_user') || 'null');
+                if (currentUser) {
+                    // Si es comprador, no puede ver ni editar inventario del vendedor -> redirigir al Mercado
+                    if ((currentUser.rol || '').toLowerCase() === 'comprador') {
+                        window.location.replace('marketplace.html');
+                        return;
+                    }
+                    if (currentUser.nombre) {
+                        currentUserName = currentUser.nombre;
+                        const userNameEl = document.getElementById('user-name');
+                        const userAvatarEl = document.getElementById('user-avatar');
+                        if (userNameEl) userNameEl.textContent = currentUser.nombre;
+                        if (userAvatarEl) {
+                            userAvatarEl.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.nombre)}&background=10b981&color=fff`;
+                        }
+                    }
+                }
+            } catch (e) {}
+
+            let editingDocId = null;
+
+            const logoutBtn = document.getElementById('logout-btn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', () => {
+                    localStorage.removeItem('uniagro_current_user');
+                });
+            }
+
+            const inventoryTableBody = document.getElementById('inventoryTableBody');
+            const activeInventoryCount = document.getElementById('activeInventoryCount');
+            const tableCountText = document.getElementById('tableCountText');
+            const dashSearchInput = document.getElementById('dashSearchInput');
+
+            function renderTable(productsList) {
+                inventoryTableBody.innerHTML = '';
+                productsList.forEach(p => {
+                    const idNum = p.ID || '-';
+                    const nombre = p.Nombre || p.nombre || 'Producto';
+                    const categoria = p.Categoria || p.categoria || 'Frutas y Verduras';
+                    const precio = Number(p.Precio ?? p.precio ?? 0);
+                    const unidad = p.Unidad || p.unidad || 'unidad';
+                    const stock = Number(p.Stock ?? p.stock ?? 0);
+                    const estado = p.Estado || (stock <= 5 ? 'Stock Bajo' : 'Activo');
+                    const isLow = estado === 'Stock Bajo' || stock <= 5;
+                    const imagen = p.Imagen || p.imagen || IMAGENES_POR_CATEGORIA[categoria] || IMAGENES_POR_CATEGORIA["Frutas y Verduras"];
+                    const descripcion = p.Descripcion || p.descripcion || '';
+                    const vendedor = p.Vendedor || p.vendedor || `${currentUserName} • 4.9 ★`;
+
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td style="font-weight: 700; color: var(--slate-500);">#${idNum}</td>
+                        <td style="font-weight: 600; color: var(--slate-900);">${nombre}</td>
+                        <td>${categoria}</td>
+                        <td>$${precio.toFixed(2)} / ${unidad}</td>
+                        <td style="${isLow ? 'color: #ef4444; font-weight: 600;' : ''}">${stock}</td>
+                        <td>
+                            <span class="status-badge status-active" style="${isLow ? 'background: #fee2e2; color: #b91c1c;' : ''}">${estado}</span>
+                        </td>
+                        <td style="text-align: right; white-space: nowrap;">
+                            <button type="button" class="btn btn-outline view-btn" style="padding: 0.25rem 0.65rem; font-size: 0.75rem;">Ver</button>
+                            <button type="button" class="btn btn-outline edit-btn" style="padding: 0.25rem 0.65rem; font-size: 0.75rem; color: var(--agro-green-dark); border-color: var(--agro-green);">Editar</button>
+                            <button type="button" class="btn btn-outline delete-btn" style="padding: 0.25rem 0.65rem; font-size: 0.75rem; color: #ef4444; border-color: #fca5a5;">Eliminar</button>
+                        </td>
+                    `;
+
+                    tr.querySelector('.view-btn').addEventListener('click', () => {
+                        localStorage.setItem('uniagro_selected_product', JSON.stringify({
+                            title: nombre,
+                            seller: vendedor,
+                            price: String(precio),
+                            category: categoria,
+                            image: imagen,
+                            description: descripcion
+                        }));
+                        window.location.href = 'producto.html';
+                    });
+
+                    tr.querySelector('.edit-btn').addEventListener('click', () => {
+                        editingDocId = p.docIdReal || p.docId || null;
+                        document.getElementById('prodName').value = nombre;
+                        document.getElementById('prodCategory').value = categoria;
+                        document.getElementById('prodPrice').value = precio;
+                        document.getElementById('prodUnit').value = unidad;
+                        document.getElementById('prodStock').value = stock;
+                        const publishBtn = document.getElementById('publishBtn');
+                        if (publishBtn) publishBtn.textContent = '💾 Actualizar Producto';
+                        document.getElementById('prodName').focus();
+                    });
+
+                    tr.querySelector('.delete-btn').addEventListener('click', async () => {
+                        if (p.docIdReal) {
+                            try {
+                                await deleteDoc(doc(db, "productos", p.docIdReal));
+                            } catch (err) {
+                                console.error("Error eliminando producto:", err);
+                            }
+                        }
+                    });
+
+                    inventoryTableBody.appendChild(tr);
+                });
+
+                if (activeInventoryCount) activeInventoryCount.textContent = productsList.length;
+                if (tableCountText) tableCountText.textContent = `Mostrando ${productsList.length} productos sincronizados en Firebase (colección "productos")`;
+            }
+
+            renderTable(PRODUCTOS_INICIALES);
+            await ensureProductsSeeded();
+
+            let currentMaxId = 8;
+
+            onSnapshot(collection(db, "productos"), (snapshot) => {
+                if (!snapshot.empty) {
+                    const docs = [];
+                    let maxId = 0;
+                    snapshot.forEach(docSnap => {
+                        const data = docSnap.data();
+                        const numId = Number(data.ID) || 0;
+                        if (numId > maxId) maxId = numId;
+                        docs.push({ docIdReal: docSnap.id, ...data });
+                    });
+                    currentMaxId = maxId;
+                    docs.sort((a, b) => (Number(a.ID) || 999) - (Number(b.ID) || 999));
+                    renderTable(docs);
+                } else {
+                    renderTable([]);
+                }
+            });
+
+            // Escuchar colección "ventas" para actualizar estadísticas del panel en vivo
+            onSnapshot(collection(db, "ventas"), (snapshot) => {
+                const revEl = document.getElementById('dashRevenueStat');
+                const cntEl = document.getElementById('dashSalesCountStat');
+                let sum = 0;
+                snapshot.forEach(d => {
+                    const v = d.data();
+                    const m = typeof v.Monto === 'number' ? v.Monto : (parseFloat(String(v.Total || v.total || '0').replace(/[^0-9.]/g, '')) || 0);
+                    sum += m;
+                });
+                if (revEl) revEl.textContent = `$${sum.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+                if (cntEl) cntEl.textContent = snapshot.size;
+            });
+
+            if (dashSearchInput) {
+                dashSearchInput.addEventListener('input', () => {
+                    const query = dashSearchInput.value.toLowerCase().trim();
+                    inventoryTableBody.querySelectorAll('tr').forEach(row => {
+                        row.style.display = row.innerText.toLowerCase().includes(query) ? '' : 'none';
+                    });
+                });
+            }
+
+            // Crear Nueva Publicación -> Guardar en colección "productos" de Firebase (uniagro-c28a1)
+            const publishForm = document.getElementById('publishProductForm');
+            const publishMsg = document.getElementById('publishMessage');
+            const publishBtn = document.getElementById('publishBtn');
+
+            if (publishForm) {
+                publishForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const nombre = document.getElementById('prodName').value.trim();
+                    const categoria = document.getElementById('prodCategory').value;
+                    const precio = parseFloat(document.getElementById('prodPrice').value) || 0;
+                    const unidad = document.getElementById('prodUnit').value.trim() || 'unidad';
+                    const stock = parseInt(document.getElementById('prodStock').value, 10) || 1;
+
+                    publishBtn.disabled = true;
+                    publishBtn.textContent = 'Guardando en Firebase...';
+
+                    const nextId = currentMaxId + 1;
+                    const nuevoProducto = {
+                        ID: nextId,
+                        Nombre: nombre,
+                        Categoria: categoria,
+                        Precio: precio,
+                        Unidad: unidad,
+                        Stock: stock,
+                        Estado: stock <= 5 ? "Stock Bajo" : "Activo",
+                        Etiqueta: "Nuevo",
+                        Vendedor: `${currentUserName} • 5.0 ★`,
+                        Descripcion: `${nombre} fresco (${stock} ${unidad} disponibles). Cultivado y distribuido directamente por ${currentUserName}.`,
+                        Imagen: IMAGENES_POR_CATEGORIA[categoria] || IMAGENES_POR_CATEGORIA["Frutas y Verduras"]
+                    };
+
+                    try {
+                        if (editingDocId) {
+                            await updateDoc(doc(db, "productos", editingDocId), {
+                                Nombre: nombre,
+                                Categoria: categoria,
+                                Precio: precio,
+                                Unidad: unidad,
+                                Stock: stock,
+                                Estado: stock <= 5 ? "Stock Bajo" : "Activo"
+                            });
+                            editingDocId = null;
+                        } else {
+                            await addDoc(collection(db, "productos"), nuevoProducto);
+                        }
+                        publishForm.reset();
+                        if (publishMsg) {
+                            publishMsg.style.display = 'block';
+                            publishMsg.style.background = '#dcfce7';
+                            publishMsg.style.color = '#15803d';
+                            publishMsg.textContent = `✅ ¡"${nombre}" guardado correctamente en Firebase!`;
+                            setTimeout(() => { publishMsg.style.display = 'none'; }, 4000);
+                        }
+                    } catch (err) {
+                        console.error("Error al guardar en Firestore:", err);
+                        if (publishMsg) {
+                            publishMsg.style.display = 'block';
+                            publishMsg.style.background = '#fee2e2';
+                            publishMsg.style.color = '#b91c1c';
+                            publishMsg.textContent = '❌ Error al guardar en Firebase: ' + err.message;
+                        }
+                    }
+
+                    publishBtn.disabled = false;
+                    publishBtn.textContent = 'Guardar';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uniagro | Administrar Mi Cuenta</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Navbar Unificado -->
+    <nav class="navbar">
+        <a href="marketplace.html" class="nav-brand">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="var(--agro-green)"/>
+                <path d="M2 17L12 22L22 17" stroke="var(--agro-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M2 12L12 17L22 12" stroke="var(--agro-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Uni<span>Agro</span>
+        </a>
+        <div class="nav-links">
+            <a href="marketplace.html" class="nav-link">Mercado</a>
+            <a href="dashboard.html" class="nav-link seller-only-nav">Panel Vendedor</a>
+            <a href="insumos.html" class="nav-link seller-only-nav">🌱 Insumos y Tiendas</a>
+            <a href="historial.html" class="nav-link seller-only-nav">Historial y Ventas</a>
+            <a href="producto.html" class="nav-link">Detalle Producto</a>
+            <div style="width: 1px; height: 24px; background: var(--slate-300); margin: 0 0.5rem;"></div>
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <a href="perfil.html" id="user-profile-link" title="Administrar mi cuenta" style="display: flex; align-items: center; gap: 0.6rem; padding: 0.25rem 0.6rem; border-radius: 9999px; background: var(--agro-green-lighter); border: 1px solid var(--agro-green); transition: all 0.2s;">
+                    <img id="user-avatar" src="https://ui-avatars.com/api/?name=Usuario+Uniagro&background=10b981&color=fff" alt="Perfil" style="width: 36px; height: 36px; border-radius: 50%;">
+                    <span id="user-name" style="font-size: 0.875rem; font-weight: 700; color: var(--agro-green-dark);">Mi Cuenta</span>
+                </a>
+                <a href="login.html" id="logout-btn" class="btn btn-outline" style="padding: 0.4rem 0.9rem; border-radius: 9999px; font-size: 0.85rem;">Salir</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container" style="max-width: 920px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+            <div>
+                <h1 style="font-size: 2.25rem; margin-bottom: 0.35rem;">Administrar Mi Cuenta</h1>
+                <p style="color: var(--slate-500); font-size: 1.05rem;">Actualiza tu nombre, número de celular, correo o clave de acceso cuando quieras.</p>
+            </div>
+            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                <a href="insumos.html" class="btn btn-primary seller-only-nav">🌱 Ir a Tienda de Semillas y Fungicidas</a>
+                <a href="marketplace.html" class="btn btn-outline">← Volver al Mercado</a>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 280px 1fr; gap: 2rem; align-items: start;">
+            <!-- Tarjeta Resumen del Usuario -->
+            <div class="card" style="padding: 2rem 1.5rem; text-align: center;">
+                <div style="position: relative; display: inline-block; margin-bottom: 1rem;">
+                    <img id="profile-big-avatar" src="https://ui-avatars.com/api/?name=Usuario+Uniagro&background=10b981&color=fff&size=128" alt="Avatar" style="width: 100px; height: 100px; border-radius: 50%; border: 4px solid var(--agro-green-light); box-shadow: var(--shadow-md);">
+                </div>
+                <h2 id="profile-card-name" style="font-size: 1.35rem; margin-bottom: 0.35rem;">Usuario Uniagro</h2>
+                <div id="profile-role-badge" class="status-badge status-active" style="margin-bottom: 1rem; font-size: 0.85rem; padding: 0.3rem 0.9rem;">
+                    🌾 Campesino
+                </div>
+
+                <div style="text-align: left; border-top: 1px solid var(--slate-200); padding-top: 1rem; margin-top: 0.5rem; font-size: 0.875rem; color: var(--slate-600); display: flex; flex-direction: column; gap: 0.6rem;">
+                    <div>
+                        <strong style="color: var(--slate-800); display: block; font-size: 0.75rem; text-transform: uppercase;">📱 Celular:</strong>
+                        <span id="profile-card-phone">No registrado</span>
+                    </div>
+                    <div>
+                        <strong style="color: var(--slate-800); display: block; font-size: 0.75rem; text-transform: uppercase;">✉️ Correo:</strong>
+                        <span id="profile-card-email" style="word-break: break-all;">No registrado</span>
+                    </div>
+                    <div>
+                        <strong style="color: var(--slate-800); display: block; font-size: 0.75rem; text-transform: uppercase;">🆔 ID de Usuario:</strong>
+                        <span id="profile-card-id">#1</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulario de Edición de Cuenta -->
+            <div class="card" style="padding: 2rem; border-top: 4px solid var(--agro-green);">
+                <h3 style="font-size: 1.25rem; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--slate-200);">
+                    Datos Personales y de Contacto
+                </h3>
+
+                <div id="profile-message" style="display: none; padding: 0.85rem 1rem; border-radius: var(--radius-md); margin-bottom: 1.25rem; font-size: 0.95rem; font-weight: 600;"></div>
+
+                <form id="profile-form">
+                    <div class="form-group">
+                        <label class="form-label" for="prof-name">Nombre Completo</label>
+                        <input type="text" id="prof-name" class="form-input" placeholder="Ej. Don Pedro Gómez" style="font-size: 1.05rem; padding: 0.85rem 1rem;" required>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label class="form-label" for="prof-phone">📱 Número de Celular / Teléfono</label>
+                            <input type="tel" id="prof-phone" inputmode="numeric" class="form-input" placeholder="Ej. 310 123 4567" style="font-size: 1.05rem; font-weight: 600; padding: 0.85rem 1rem;">
+                            <small style="color: var(--slate-500); font-size: 0.78rem;">Con este número puedes iniciar sesión fácilmente.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="prof-email">✉️ Correo Electrónico (Opcional)</label>
+                            <input type="email" id="prof-email" class="form-input" placeholder="ejemplo@correo.com" style="font-size: 1.05rem; padding: 0.85rem 1rem;">
+                            <small style="color: var(--slate-500); font-size: 0.78rem;">Déjalo en blanco si solo usas celular.</small>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label class="form-label" for="prof-role">Tipo de Cuenta (Rol)</label>
+                            <select id="prof-role" class="form-input" style="font-size: 1rem; padding: 0.85rem 1rem;">
+                                <option value="campesino">🌾 Soy Campesino (Vendedor)</option>
+                                <option value="comprador">🛒 Soy Comprador (Cliente)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="prof-password">🔑 Clave / Contraseña de Acceso</label>
+                            <div style="position: relative;">
+                                <input type="password" id="prof-password" class="form-input" placeholder="Mínimo 6 caracteres" minlength="6" style="padding-right: 4rem; font-size: 1.05rem; padding-top: 0.85rem; padding-bottom: 0.85rem;">
+                                <button type="button" id="toggle-prof-pwd" style="position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); background: var(--slate-100); padding: 0.3rem 0.6rem; border-radius: var(--radius-md); border: 1px solid var(--slate-300); color: var(--slate-700); cursor: pointer; font-size: 0.8rem; font-weight: 700;">Ver</button>
+                            </div>
+                            <small style="color: var(--slate-500); font-size: 0.78rem;">Escribe una nueva si deseas cambiar tu clave actual.</small>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap;">
+                        <button type="submit" id="save-profile-btn" class="btn btn-primary" style="flex: 1; padding: 0.95rem; font-size: 1.05rem;">
+                            💾 Guardar Cambios en Mi Cuenta
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        import { getFirestore, collection, doc, getDocs, updateDoc, addDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCgCahd5EGN6_f3LgUDBN2LBnPsmIuu1h0",
+            authDomain: "uniagro-c28a1.firebaseapp.com",
+            projectId: "uniagro-c28a1",
+            storageBucket: "uniagro-c28a1.firebasestorage.app",
+            messagingSenderId: "628982611619",
+            appId: "1:628982611619:web:eeede64203d82c8b068916"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        function normalizePhone(raw) {
+            let digits = String(raw || '').replace(/\D/g, '');
+            if (digits.length === 12 && digits.startsWith('57')) {
+                digits = digits.slice(2);
+            }
+            return digits;
+        }
+
+        function isSyntheticEmail(email) {
+            return String(email || '').toLowerCase().endsWith('@telefono.uniagro.com');
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const currentUser = JSON.parse(localStorage.getItem('uniagro_current_user') || 'null');
+            if (!currentUser) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const userNameNav = document.getElementById('user-name');
+            const userAvatarNav = document.getElementById('user-avatar');
+            const bigAvatar = document.getElementById('profile-big-avatar');
+            const cardName = document.getElementById('profile-card-name');
+            const cardRoleBadge = document.getElementById('profile-role-badge');
+            const cardPhone = document.getElementById('profile-card-phone');
+            const cardEmail = document.getElementById('profile-card-email');
+            const cardId = document.getElementById('profile-card-id');
+
+            const nameInput = document.getElementById('prof-name');
+            const phoneInput = document.getElementById('prof-phone');
+            const emailInput = document.getElementById('prof-email');
+            const roleSelect = document.getElementById('prof-role');
+            const passwordInput = document.getElementById('prof-password');
+            const togglePwdBtn = document.getElementById('toggle-prof-pwd');
+            const profileMsg = document.getElementById('profile-message');
+            const saveBtn = document.getElementById('save-profile-btn');
+
+            if (togglePwdBtn && passwordInput) {
+                togglePwdBtn.addEventListener('click', () => {
+                    const isPwd = passwordInput.type === 'password';
+                    passwordInput.type = isPwd ? 'text' : 'password';
+                    togglePwdBtn.textContent = isPwd ? 'Ocultar' : 'Ver';
+                });
+            }
+
+            const logoutBtn = document.getElementById('logout-btn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', () => {
+                    localStorage.removeItem('uniagro_current_user');
+                });
+            }
+
+            let firestoreDocId = null;
+
+            function applyRoleVisibility(rol) {
+                const isBuyer = (rol || '').toLowerCase() === 'comprador';
+                document.querySelectorAll('.seller-only-nav').forEach(el => {
+                    el.style.display = isBuyer ? 'none' : '';
+                });
+                if (cardRoleBadge) {
+                    cardRoleBadge.textContent = isBuyer ? '🛒 Comprador' : '🌾 Campesino';
+                    cardRoleBadge.style.background = isBuyer ? '#dbeafe' : 'var(--agro-green-lighter)';
+                    cardRoleBadge.style.color = isBuyer ? '#1d4ed8' : 'var(--agro-green-dark)';
+                }
+            }
+
+            function refreshVisualSummary(data) {
+                const nombre = data.nombre || 'Usuario Uniagro';
+                const rol = (data.rol || 'campesino').toLowerCase();
+                const tel = data.telefono || '';
+                const realEmail = isSyntheticEmail(data.email) ? '' : (data.email || '');
+
+                if (userNameNav) userNameNav.textContent = nombre;
+                if (userAvatarNav) userAvatarNav.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(nombre)}&background=10b981&color=fff`;
+                if (bigAvatar) bigAvatar.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(nombre)}&background=10b981&color=fff&size=128`;
+                if (cardName) cardName.textContent = nombre;
+                if (cardPhone) cardPhone.textContent = tel || 'Sin número registrado';
+                if (cardEmail) cardEmail.textContent = realEmail || 'No usa correo (entra con celular)';
+                if (cardId) cardId.textContent = `#${data.ID || 1}`;
+
+                applyRoleVisibility(rol);
+            }
+
+            // Cargar inicialmente desde localStorage
+            nameInput.value = currentUser.nombre || '';
+            phoneInput.value = currentUser.telefono || '';
+            emailInput.value = isSyntheticEmail(currentUser.email) ? '' : (currentUser.email || '');
+            roleSelect.value = (currentUser.rol || 'campesino').toLowerCase() === 'comprador' ? 'comprador' : 'campesino';
+            passwordInput.value = currentUser.clave || '';
+            refreshVisualSummary(currentUser);
+
+            // Buscar documento real en Firestore para sincronizar todos los campos
+            try {
+                const snap = await getDocs(collection(db, "usuarios"));
+                const targetPhone = normalizePhone(currentUser.telefono || '');
+                const targetEmail = (currentUser.email || '').toLowerCase();
+
+                snap.forEach(docSnap => {
+                    const d = docSnap.data();
+                    const docTel = normalizePhone(d.Telefono || '');
+                    const docCorreo = (d.Correo || '').toLowerCase();
+                    if (
+                        (currentUser.uid && d.UID === currentUser.uid) ||
+                        (targetPhone && docTel === targetPhone) ||
+                        (targetEmail && docCorreo === targetEmail)
+                    ) {
+                        firestoreDocId = docSnap.id;
+                        const loadedUser = {
+                            uid: d.UID || currentUser.uid || docSnap.id,
+                            ID: d.ID || currentUser.ID || 1,
+                            nombre: d.Nombre || currentUser.nombre || '',
+                            telefono: d.Telefono || currentUser.telefono || '',
+                            email: d.Correo || currentUser.email || '',
+                            rol: (d.Rol || currentUser.rol || 'campesino').toLowerCase(),
+                            clave: d.Clave || ''
+                        };
+                        nameInput.value = loadedUser.nombre;
+                        phoneInput.value = loadedUser.telefono;
+                        emailInput.value = isSyntheticEmail(loadedUser.email) ? '' : loadedUser.email;
+                        roleSelect.value = loadedUser.rol === 'comprador' ? 'comprador' : 'campesino';
+                        if (loadedUser.clave) passwordInput.value = loadedUser.clave;
+
+                        localStorage.setItem('uniagro_current_user', JSON.stringify(loadedUser));
+                        refreshVisualSummary(loadedUser);
+                    }
+                });
+            } catch (err) {
+                console.warn("Aviso al sincronizar perfil con Firestore:", err);
+            }
+
+            nameInput.addEventListener('input', () => {
+                const previewName = nameInput.value.trim() || 'Usuario Uniagro';
+                bigAvatar.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(previewName)}&background=10b981&color=fff&size=128`;
+                cardName.textContent = previewName;
+            });
+
+            function showMsg(text, isError = false) {
+                profileMsg.style.display = 'block';
+                profileMsg.style.backgroundColor = isError ? '#fee2e2' : '#dcfce7';
+                profileMsg.style.color = isError ? '#b91c1c' : '#15803d';
+                profileMsg.style.border = isError ? '1px solid #fca5a5' : '1px solid #86efac';
+                profileMsg.textContent = text;
+            }
+
+            document.getElementById('profile-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const newName = nameInput.value.trim();
+                const newPhone = normalizePhone(phoneInput.value.trim());
+                const rawEmail = emailInput.value.trim().toLowerCase();
+                const newRole = roleSelect.value;
+                const newPassword = passwordInput.value;
+
+                if (!newName) {
+                    showMsg('❌ El nombre no puede estar vacío.', true);
+                    return;
+                }
+                if (!newPhone && !rawEmail) {
+                    showMsg('❌ Debes tener al menos un número de celular o un correo electrónico.', true);
+                    return;
+                }
+                if (newPassword && newPassword.length < 6) {
+                    showMsg('❌ La clave debe tener al menos 6 caracteres o números.', true);
+                    return;
+                }
+
+                const finalEmail = rawEmail || `${newPhone}@telefono.uniagro.com`;
+
+                saveBtn.disabled = true;
+                saveBtn.textContent = 'Guardando cambios en Firebase...';
+
+                const updatedFields = {
+                    Nombre: newName,
+                    Telefono: newPhone,
+                    Correo: finalEmail,
+                    Rol: newRole
+                };
+                if (newPassword) {
+                    updatedFields.Clave = newPassword;
+                }
+
+                try {
+                    if (firestoreDocId) {
+                        await updateDoc(doc(db, "usuarios", firestoreDocId), updatedFields);
+                    } else {
+                        const docRef = await addDoc(collection(db, "usuarios"), {
+                            ID: currentUser.ID || 1,
+                            UID: currentUser.uid || 'user_' + Date.now(),
+                            ...updatedFields
+                        });
+                        firestoreDocId = docRef.id;
+                    }
+
+                    const updatedUserObj = {
+                        ...currentUser,
+                        nombre: newName,
+                        telefono: newPhone,
+                        email: finalEmail,
+                        rol: newRole,
+                        clave: newPassword || currentUser.clave || ''
+                    };
+
+                    localStorage.setItem('uniagro_current_user', JSON.stringify(updatedUserObj));
+                    if (newPhone) {
+                        localStorage.setItem('uniagro_remember_login', newPhone);
+                    } else if (rawEmail) {
+                        localStorage.setItem('uniagro_remember_login', rawEmail);
+                    }
+
+                    refreshVisualSummary(updatedUserObj);
+                    showMsg('✅ ¡Tus datos se han actualizado correctamente en tu cuenta y en Firebase!');
+                } catch (err) {
+                    console.error("Error actualizando perfil:", err);
+                    showMsg('❌ Ocurrió un error al actualizar en Firebase: ' + err.message, true);
+                }
+
+                saveBtn.disabled = false;
+                saveBtn.textContent = '💾 Guardar Cambios en Mi Cuenta';
+            });
+        });
+    </script>
+</body>
+</html>

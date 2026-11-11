@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uniagro | Mercado</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Navbar Unificado -->
+    <nav class="navbar">
+        <a href="marketplace.html" class="nav-brand">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="var(--agro-green)"/>
+                <path d="M2 17L12 22L22 17" stroke="var(--agro-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M2 12L12 17L22 12" stroke="var(--agro-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Uni<span>Agro</span>
+        </a>
+        <div class="nav-links">
+            <a href="marketplace.html" class="nav-link active">Mercado</a>
+            <a href="dashboard.html" class="nav-link seller-only-nav">Panel Vendedor</a>
+            <a href="insumos.html" class="nav-link seller-only-nav">🌱 Insumos y Tiendas</a>
+            <a href="historial.html" class="nav-link seller-only-nav">Historial y Ventas</a>
+            <a href="producto.html" class="nav-link">Detalle Producto</a>
+            <div style="width: 1px; height: 24px; background: var(--slate-300); margin: 0 0.5rem;"></div>
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <a href="perfil.html" id="user-profile-link" title="Administrar mi cuenta" style="display: flex; align-items: center; gap: 0.6rem; padding: 0.25rem 0.6rem; border-radius: 9999px; transition: background 0.2s;">
+                    <img id="user-avatar" src="https://ui-avatars.com/api/?name=Usuario+Uniagro&background=10b981&color=fff" alt="Perfil" style="width: 36px; height: 36px; border-radius: 50%; cursor: pointer;">
+                    <span id="user-name" style="font-size: 0.875rem; font-weight: 600; color: var(--slate-700); cursor: pointer;">Mi Cuenta</span>
+                </a>
+                <a href="login.html" id="signOutBtn" class="btn btn-outline" style="padding: 0.4rem 0.9rem; border-radius: 9999px; font-size: 0.85rem;">Salir</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+            <div>
+                <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">Inventario Disponible</h1>
+                <p style="color: var(--slate-500); font-size: 1.125rem;">Explora productos frescos, semillas y equipos.</p>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <span id="resultsCount" style="font-size: 0.875rem; color: var(--slate-500); font-weight: 500;">Cargando productos...</span>
+                <select id="sortSelect" class="form-input" style="width: auto; padding: 0.5rem 1rem; font-size: 0.875rem;">
+                    <option value="default">Ordenar: Destacados</option>
+                    <option value="price-asc">Precio: Menor a Mayor</option>
+                    <option value="price-desc">Precio: Mayor a Menor</option>
+                    <option value="name-asc">Nombre: A - Z</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Prominent Search -->
+        <div class="search-bar">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="searchInput" placeholder="Busca cultivos, maquinaria o vendedores...">
+            <button id="searchMenuBtn" type="button" class="btn btn-primary" style="padding: 0.5rem 1.5rem; border-radius: 9999px;">Buscar</button>
+        </div>
+
+        <div class="marketplace-layout">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <h3 style="font-size: 1.125rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--slate-200);">Categorías</h3>
+                <ul class="category-list" id="categoryList">
+                    <li class="category-item">
+                        <a href="#" class="category-link active" data-category="all">
+                            Todos los Productos
+                            <span class="category-badge" data-count-for="all" style="background: var(--slate-200); padding: 0.125rem 0.5rem; border-radius: 999px; font-size: 0.75rem; color: var(--slate-700);">8</span>
+                        </a>
+                    </li>
+                    <li class="category-item">
+                        <a href="#" class="category-link" data-category="Frutas y Verduras">
+                            Frutas y Verduras
+                            <span class="category-badge" data-count-for="Frutas y Verduras" style="background: var(--slate-100); padding: 0.125rem 0.5rem; border-radius: 999px; font-size: 0.75rem; color: var(--slate-500);">2</span>
+                        </a>
+                    </li>
+                    <li class="category-item">
+                        <a href="#" class="category-link" data-category="Semillas y Plantas">
+                            Semillas y Plantas
+                            <span class="category-badge" data-count-for="Semillas y Plantas" style="background: var(--slate-100); padding: 0.125rem 0.5rem; border-radius: 999px; font-size: 0.75rem; color: var(--slate-500);">2</span>
+                        </a>
+                    </li>
+                    <li class="category-item">
+                        <a href="#" class="category-link" data-category="Fertilizantes">
+                            Fertilizantes
+                            <span class="category-badge" data-count-for="Fertilizantes" style="background: var(--slate-100); padding: 0.125rem 0.5rem; border-radius: 999px; font-size: 0.75rem; color: var(--slate-500);">2</span>
+                        </a>
+                    </li>
+                    <li class="category-item">
+                        <a href="#" class="category-link" data-category="Maquinaria">
+                            Maquinaria
+                            <span class="category-badge" data-count-for="Maquinaria" style="background: var(--slate-100); padding: 0.125rem 0.5rem; border-radius: 999px; font-size: 0.75rem; color: var(--slate-500);">1</span>
+                        </a>
+                    </li>
+                    <li class="category-item">
+                        <a href="#" class="category-link" data-category="Ganado">
+                            Ganado
+                            <span class="category-badge" data-count-for="Ganado" style="background: var(--slate-100); padding: 0.125rem 0.5rem; border-radius: 999px; font-size: 0.75rem; color: var(--slate-500);">1</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <h3 style="font-size: 1.125rem; margin-top: 2rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--slate-200);">Rango de Precio ($)</h3>
+                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                    <input type="number" id="minPrice" min="0" class="form-input" placeholder="Mín" style="padding: 0.5rem;">
+                    <span style="color: var(--slate-400);">-</span>
+                    <input type="number" id="maxPrice" min="0" class="form-input" placeholder="Máx" style="padding: 0.5rem;">
+                </div>
+                <button id="applyFilterBtn" type="button" class="btn btn-primary" style="width: 100%; margin-top: 1rem; padding: 0.5rem; justify-content: center;">Aplicar Filtro</button>
+                <button id="clearFilterBtn" type="button" class="btn btn-outline" style="width: 100%; margin-top: 0.5rem; padding: 0.5rem; justify-content: center;">Limpiar Filtros</button>
+            </aside>
+
+            <!-- Product Grid Wrapper -->
+            <div>
+                <div class="product-grid" id="productGrid"></div>
+
+                <!-- Mensaje cuando no hay coincidencias -->
+                <div id="emptyState" class="card" style="display: none; padding: 3rem; text-align: center;">
+                    <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">No se encontraron productos</h3>
+                    <p style="color: var(--slate-500); margin-bottom: 1.5rem;">No hay productos que coincidan con tu búsqueda, categoría o rango de precio actual.</p>
+                    <button id="resetFromEmptyBtn" type="button" class="btn btn-primary">Ver todos los productos</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal de Contacto Directo con el Campesino -->
+    <div id="contactModal" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.55); z-index: 100; align-items: center; justify-content: center; padding: 1rem;">
+        <div class="card" style="max-width: 460px; width: 100%; padding: 2rem; border-top: 4px solid var(--agro-green);">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+                <div>
+                    <span class="status-badge status-active" style="margin-bottom: 0.4rem;">🌾 Trato Directo con el Campesino</span>
+                    <h3 id="modalSellerName" style="font-size: 1.35rem; margin: 0;">Productor Rural</h3>
+                </div>
+                <button type="button" id="closeContactModal" style="background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--slate-500);">✕</button>
+            </div>
+            <p id="modalProductName" style="color: var(--slate-600); font-size: 0.95rem; margin-bottom: 1rem;"></p>
+
+            <div style="background: var(--slate-50); border: 1px solid var(--slate-200); border-radius: var(--radius-md); padding: 1rem; margin-bottom: 1rem;">
+                <div style="font-size: 0.8rem; color: var(--slate-500); text-transform: uppercase; font-weight: 700;">📱 Teléfono / WhatsApp del Campesino</div>
+                <div id="modalSellerPhone" style="font-size: 1.25rem; font-weight: 800; color: var(--agro-green-dark); margin-top: 0.25rem;">+57 310 456 7890</div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 1rem;">
+                <label class="form-label" for="buyerQuickMessage">Envíale un mensaje rápido al campesino:</label>
+                <textarea id="buyerQuickMessage" class="form-input" rows="3" placeholder="Hola, estoy interesado en comprar su cosecha. ¿Tiene disponibilidad?"></textarea>
+            </div>
+
+            <div id="modalContactSuccess" style="display: none; padding: 0.75rem; border-radius: var(--radius-md); background: #dcfce7; color: #15803d; font-size: 0.875rem; font-weight: 600; margin-bottom: 1rem;"></div>
+
+            <div style="display: flex; gap: 0.75rem;">
+                <button type="button" id="sendQuickMsgBtn" class="btn btn-primary" style="flex: 1;">💬 Enviar Mensaje</button>
+                <button type="button" id="goToBuyFromModalBtn" class="btn btn-outline" style="flex: 1;">🛒 Ir a Comprar</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        import { getFirestore, collection, doc, setDoc, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCgCahd5EGN6_f3LgUDBN2LBnPsmIuu1h0",
+            authDomain: "uniagro-c28a1.firebaseapp.com",
+            projectId: "uniagro-c28a1",
+            storageBucket: "uniagro-c28a1.firebasestorage.app",
+            messagingSenderId: "628982611619",
+            appId: "1:628982611619:web:eeede64203d82c8b068916"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Catálogo base para poblar automáticamente la colección "productos" en Firebase si está vacía
+        const PRODUCTOS_INICIALES = [
+            {
+                docId: "prod_1",
+                ID: 1,
+                Nombre: "Aguacates Hass Orgánicos",
+                Categoria: "Frutas y Verduras",
+                Precio: 45,
+                Unidad: "caja (10kg)",
+                Stock: 120,
+                Estado: "Activo",
+                Etiqueta: "Top Ventas",
+                Vendedor: "Campos Verdes • 4.9 ★",
+                Descripcion: "Aguacates de primera calidad, cultivados de forma sostenible. Ideales para exportación.",
+                Imagen: "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                docId: "prod_2",
+                ID: 2,
+                Nombre: "Granos de Café Robusta A",
+                Categoria: "Semillas y Plantas",
+                Precio: 120,
+                Unidad: "saco (50kg)",
+                Stock: 45,
+                Estado: "Activo",
+                Etiqueta: "Destacado",
+                Vendedor: "Cafetaleros del Sur • 4.7 ★",
+                Descripcion: "Granos de café verde sin tostar directamente de las montañas. Alto rendimiento.",
+                Imagen: "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                docId: "prod_3",
+                ID: 3,
+                Nombre: "Semillas Maíz Amarillo Híbrido",
+                Categoria: "Semillas y Plantas",
+                Precio: 85,
+                Unidad: "bolsa (25kg)",
+                Stock: 25,
+                Estado: "Activo",
+                Etiqueta: "Nuevo",
+                Vendedor: "Semillas Andinas • 4.8 ★",
+                Descripcion: "Semillas resistentes a alta temperatura. Garantiza una gran cosecha por hectárea.",
+                Imagen: "https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                docId: "prod_4",
+                ID: 4,
+                Nombre: "Fertilizante Orgánico",
+                Categoria: "Fertilizantes",
+                Precio: 30,
+                Unidad: "bolsa (20kg)",
+                Stock: 5,
+                Estado: "Stock Bajo",
+                Etiqueta: "Orgánico",
+                Vendedor: "EcoNutrientes SAS • 4.6 ★",
+                Descripcion: "Mezcla de compost 100% natural, especial para mejorar los suelos antes de siembra.",
+                Imagen: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                docId: "prod_5",
+                ID: 5,
+                Nombre: "Tomate Chonto Premium",
+                Categoria: "Frutas y Verduras",
+                Precio: 25,
+                Unidad: "canastilla (22kg)",
+                Stock: 80,
+                Estado: "Activo",
+                Etiqueta: "Cosecha Hoy",
+                Vendedor: "Hacienda La Gloria • 4.9 ★",
+                Descripcion: "Tomates frescos seleccionados a mano en Cundinamarca, sin químicos y listos para distribución.",
+                Imagen: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                docId: "prod_6",
+                ID: 6,
+                Nombre: "Bio-Abono Mineral NPK",
+                Categoria: "Fertilizantes",
+                Precio: 42,
+                Unidad: "bulto (50kg)",
+                Stock: 60,
+                Estado: "Activo",
+                Etiqueta: "Recomendado",
+                Vendedor: "AgroQuímica Verde • 4.8 ★",
+                Descripcion: "Nutrición balanceada de liberación lenta para cultivos de papa, café y frutales.",
+                Imagen: "https://images.unsplash.com/photo-1585314062340-f1a5a7c9328d?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                docId: "prod_7",
+                ID: 7,
+                Nombre: "Motocultor Diésel 10HP",
+                Categoria: "Maquinaria",
+                Precio: 650,
+                Unidad: "unidad",
+                Stock: 8,
+                Estado: "Activo",
+                Etiqueta: "Garantía 1 Año",
+                Vendedor: "Maquinaria del Campo • 4.9 ★",
+                Descripcion: "Ideal para preparación de terreno y arado en parcelas medianas. Bajo consumo de combustible.",
+                Imagen: "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                docId: "prod_8",
+                ID: 8,
+                Nombre: "Novillas Holstein Lecheras",
+                Categoria: "Ganado",
+                Precio: 950,
+                Unidad: "cabeza",
+                Stock: 12,
+                Estado: "Activo",
+                Etiqueta: "Certificado",
+                Vendedor: "Ganadería El Rosal • 5.0 ★",
+                Descripcion: "Ganado bovino con registro sanitario al día y alta producción lechera comprobada.",
+                Imagen: "https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?auto=format&fit=crop&w=600&q=80"
+            }
+        ];
+
+        const VENTAS_INICIALES = [
+            {
+                docId: "venta_1",
+                ID: 1,
+                Producto: "Papa Sabanera Premium",
+                Cliente: "Restaurante El Huerto",
+                Cantidad: "15 Bultos",
+                Monto: 1200,
+                Total: "$1,200.00",
+                Fecha: "08 Nov, 2026",
+                Estado: "Completado"
+            },
+            {
+                docId: "venta_2",
+                ID: 2,
+                Producto: "Zanahoria Lavada",
+                Cliente: "Central de Abastos M.",
+                Cantidad: "8 Bultos",
+                Monto: 640,
+                Total: "$640.00",
+                Fecha: "09 Nov, 2026",
+                Estado: "Pendiente"
+            },
+            {
+                docId: "venta_3",
+                ID: 3,
+                Producto: "Cebolla Cabezona Blanca",
+                Cliente: "Supermercados Vida",
+                Cantidad: "20 Canastillas",
+                Monto: 2440,
+                Total: "$2,440.00",
+                Fecha: "09 Nov, 2026",
+                Estado: "Completado"
+            },
+            {
+                docId: "venta_4",
+                ID: 4,
+                Producto: "Aguacates Hass Orgánicos",
+                Cliente: "Distribuidora Del Campo",
+                Cantidad: "10 Cajas",
+                Monto: 450,
+                Total: "$450.00",
+                Fecha: "10 Nov, 2026",
+                Estado: "Completado"
+            }
+        ];
+
+        async function ensureProductsSeeded() {
+            try {
+                const snap = await getDocs(collection(db, "productos"));
+                if (snap.empty) {
+                    console.log("📦 Sembrando catálogo inicial en la colección 'productos' de Firebase...");
+                    for (const item of PRODUCTOS_INICIALES) {
+                        const { docId, ...data } = item;
+                        await setDoc(doc(db, "productos", docId), data);
+                    }
+                    console.log("✅ Productos guardados en Firestore (uniagro-c28a1 -> productos).");
+                }
+            } catch (err) {
+                console.warn("Aviso al verificar colección productos:", err);
+            }
+
+            try {
+                const snapVentas = await getDocs(collection(db, "ventas"));
+                if (snapVentas.empty) {
+                    for (const v of VENTAS_INICIALES) {
+                        const { docId, ...data } = v;
+                        await setDoc(doc(db, "ventas", docId), data);
+                    }
+                    console.log("✅ Ventas iniciales guardadas en Firestore (uniagro-c28a1 -> ventas).");
+                }
+            } catch (err) {
+                console.warn("Aviso al verificar colección ventas:", err);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const searchInput = document.getElementById('searchInput');
+            const searchMenuBtn = document.getElementById('searchMenuBtn');
+            const categoryLinks = document.querySelectorAll('.category-link');
+            const minPriceInput = document.getElementById('minPrice');
+            const maxPriceInput = document.getElementById('maxPrice');
+            const applyFilterBtn = document.getElementById('applyFilterBtn');
+            const clearFilterBtn = document.getElementById('clearFilterBtn');
+            const resetFromEmptyBtn = document.getElementById('resetFromEmptyBtn');
+            const sortSelect = document.getElementById('sortSelect');
+            const productGrid = document.getElementById('productGrid');
+            const emptyState = document.getElementById('emptyState');
+            const resultsCount = document.getElementById('resultsCount');
+            const signOutBtn = document.getElementById('signOutBtn');
+
+            let selectedCategory = 'all';
+
+            try {
+                const currentUser = JSON.parse(localStorage.getItem('uniagro_current_user') || 'null');
+                if (currentUser) {
+                    const userNameEl = document.getElementById('user-name');
+                    const userAvatarEl = document.getElementById('user-avatar');
+                    if (userNameEl && currentUser.nombre) userNameEl.textContent = currentUser.nombre;
+                    if (userAvatarEl && currentUser.nombre) {
+                        userAvatarEl.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.nombre)}&background=10b981&color=fff`;
+                    }
+                    const isBuyer = (currentUser.rol || '').toLowerCase() === 'comprador';
+                    if (isBuyer) {
+                        document.querySelectorAll('.seller-only-nav').forEach(el => {
+                            el.style.display = 'none';
+                        });
+                    }
+                }
+            } catch (e) {}
+
+            if (signOutBtn) {
+                signOutBtn.addEventListener('click', () => {
+                    localStorage.removeItem('uniagro_current_user');
+                });
+            }
+
+            const contactModal = document.getElementById('contactModal');
+            const closeContactModalBtn = document.getElementById('closeContactModal');
+            const modalSellerName = document.getElementById('modalSellerName');
+            const modalProductName = document.getElementById('modalProductName');
+            const modalSellerPhone = document.getElementById('modalSellerPhone');
+            const buyerQuickMessage = document.getElementById('buyerQuickMessage');
+            const modalContactSuccess = document.getElementById('modalContactSuccess');
+            const sendQuickMsgBtn = document.getElementById('sendQuickMsgBtn');
+            const goToBuyFromModalBtn = document.getElementById('goToBuyFromModalBtn');
+            let modalSelectedProd = null;
+
+            const TELEFONOS_CAMPESINOS = [
+                "+57 310 452 8910",
+                "+57 314 782 3341",
+                "+57 320 619 4420",
+                "+57 311 890 1234",
+                "+57 315 334 9876",
+                "+57 312 556 7788",
+                "+57 318 901 2345",
+                "+57 300 445 6677"
+            ];
+
+            function openContactModal(prodData, phoneStr) {
+                modalSelectedProd = prodData;
+                const cleanSeller = (prodData.seller || 'Campesino Uniagro').split('•')[0].trim();
+                modalSellerName.textContent = cleanSeller;
+                modalProductName.textContent = `Producto: ${prodData.title} ($${Number(prodData.price).toFixed(2)})`;
+                modalSellerPhone.textContent = phoneStr;
+                buyerQuickMessage.value = `Hola ${cleanSeller}, vi su publicación de "${prodData.title}" en Uniagro y me gustaría comprarle.`;
+                modalContactSuccess.style.display = 'none';
+                contactModal.style.display = 'flex';
+            }
+
+            if (closeContactModalBtn) {
+                closeContactModalBtn.addEventListener('click', () => {
+                    contactModal.style.display = 'none';
+                });
+            }
+            if (contactModal) {
+                contactModal.addEventListener('click', (e) => {
+                    if (e.target === contactModal) contactModal.style.display = 'none';
+                });
+            }
+            if (sendQuickMsgBtn) {
+                sendQuickMsgBtn.addEventListener('click', () => {
+                    const cleanSeller = (modalSelectedProd?.seller || 'el campesino').split('•')[0].trim();
+                    modalContactSuccess.style.display = 'block';
+                    modalContactSuccess.textContent = `✅ ¡Mensaje enviado a ${cleanSeller}! También puedes llamarlo o escribirle al ${modalSellerPhone.textContent}.`;
+                });
+            }
+            if (goToBuyFromModalBtn) {
+                goToBuyFromModalBtn.addEventListener('click', () => {
+                    if (modalSelectedProd) {
+                        localStorage.setItem('uniagro_selected_product', JSON.stringify(modalSelectedProd));
+                        window.location.href = 'producto.html';
+                    }
+                });
+            }
+
+            function renderProductsList(productsArray) {
+                productGrid.innerHTML = '';
+                productsArray.forEach((p, idx) => {
+                    const nombre = p.Nombre || p.nombre || 'Producto Agrícola';
+                    const categoria = p.Categoria || p.categoria || 'Frutas y Verduras';
+                    const precio = Number(p.Precio ?? p.precio ?? 0);
+                    const unidad = p.Unidad || p.unidad || 'unidad';
+                    const vendedor = p.Vendedor || p.vendedor || 'Productor Uniagro • 4.9 ★';
+                    const descripcion = p.Descripcion || p.descripcion || 'Producto fresco directamente del campo.';
+                    const etiqueta = p.Etiqueta || p.etiqueta || 'Disponible';
+                    const imagen = p.Imagen || p.imagen || 'https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?auto=format&fit=crop&w=600&q=80';
+                    const telefonoCampesino = p.TelefonoVendedor || TELEFONOS_CAMPESINOS[idx % TELEFONOS_CAMPESINOS.length];
+
+                    const article = document.createElement('article');
+                    article.className = 'card product-card';
+                    article.setAttribute('data-category', categoria);
+                    article.setAttribute('data-price', String(precio));
+                    article.style.cursor = 'pointer';
+
+                    article.innerHTML = `
+                        <div class="product-img-wrapper">
+                            <span class="product-badge">${etiqueta}</span>
+                            <img src="${imagen}" alt="${nombre}" class="product-img">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-seller">${vendedor}</div>
+                            <h3 class="product-title">${nombre}</h3>
+                            <p style="color: var(--slate-500); font-size: 0.875rem; margin-bottom: 1rem; line-height: 1.4;">${descripcion}</p>
+                            <div class="product-price">$${precio.toFixed(2)} <span style="font-size: 0.875rem; color: var(--slate-500); font-weight: 400;">/ ${unidad}</span></div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                                <button type="button" class="btn btn-primary buy-product-btn" style="padding: 0.6rem 0.5rem; font-size: 0.85rem;">🛒 Comprar</button>
+                                <button type="button" class="btn btn-outline contact-seller-btn" style="padding: 0.6rem 0.5rem; font-size: 0.85rem;">📞 Contactar</button>
+                            </div>
+                        </div>
+                    `;
+
+                    const prodPayload = {
+                        title: nombre,
+                        seller: vendedor,
+                        sellerPhone: telefonoCampesino,
+                        price: String(precio),
+                        category: categoria,
+                        image: imagen,
+                        description: descripcion
+                    };
+
+                    article.querySelector('.contact-seller-btn').addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        openContactModal(prodPayload, telefonoCampesino);
+                    });
+
+                    article.addEventListener('click', () => {
+                        localStorage.setItem('uniagro_selected_product', JSON.stringify(prodPayload));
+                        window.location.href = 'producto.html';
+                    });
+
+                    productGrid.appendChild(article);
+                });
+
+                updateCategoryCounts();
+                applyAllFilters();
+            }
+
+            // Renderizar inicialmente mientras sincroniza con Firebase
+            renderProductsList(PRODUCTOS_INICIALES);
+
+            // Asegurar que los 8 productos estén guardados en Firebase y escuchar cambios en tiempo real
+            await ensureProductsSeeded();
+
+            onSnapshot(collection(db, "productos"), (snapshot) => {
+                if (!snapshot.empty) {
+                    const docs = [];
+                    snapshot.forEach(docSnap => {
+                        docs.push({ id: docSnap.id, ...docSnap.data() });
+                    });
+                    docs.sort((a, b) => (Number(a.ID) || 999) - (Number(b.ID) || 999));
+                    renderProductsList(docs);
+                }
+            });
+
+            function getProducts() {
+                return Array.from(productGrid.querySelectorAll('.product-card'));
+            }
+
+            function updateCategoryCounts() {
+                const allCards = getProducts();
+                const countBadges = document.querySelectorAll('[data-count-for]');
+                countBadges.forEach(badge => {
+                    const cat = badge.getAttribute('data-count-for');
+                    if (cat === 'all') {
+                        badge.textContent = allCards.length;
+                    } else {
+                        const count = allCards.filter(c => (c.getAttribute('data-category') || '').toLowerCase() === cat.toLowerCase()).length;
+                        badge.textContent = count;
+                    }
+                });
+            }
+
+            function applyAllFilters() {
+                const query = (searchInput?.value || '').toLowerCase().trim();
+                const minVal = minPriceInput?.value !== '' ? parseFloat(minPriceInput.value) : null;
+                const maxVal = maxPriceInput?.value !== '' ? parseFloat(maxPriceInput.value) : null;
+                const sortVal = sortSelect?.value || 'default';
+
+                const cards = getProducts();
+                let visibleCount = 0;
+
+                cards.forEach(card => {
+                    const title = card.querySelector('.product-title')?.innerText.toLowerCase() || '';
+                    const seller = card.querySelector('.product-seller')?.innerText.toLowerCase() || '';
+                    const desc = card.querySelector('p')?.innerText.toLowerCase() || '';
+                    const category = card.getAttribute('data-category') || '';
+                    const price = parseFloat(card.getAttribute('data-price') || '0');
+
+                    const matchesSearch = !query || title.includes(query) || seller.includes(query) || desc.includes(query) || category.toLowerCase().includes(query);
+                    const matchesCategory = selectedCategory === 'all' || category.toLowerCase() === selectedCategory.toLowerCase();
+                    const matchesMin = minVal === null || isNaN(minVal) || price >= minVal;
+                    const matchesMax = maxVal === null || isNaN(maxVal) || price <= maxVal;
+
+                    if (matchesSearch && matchesCategory && matchesMin && matchesMax) {
+                        card.style.display = '';
+                        visibleCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                if (sortVal !== 'default') {
+                    const sorted = [...cards].sort((a, b) => {
+                        const priceA = parseFloat(a.getAttribute('data-price') || '0');
+                        const priceB = parseFloat(b.getAttribute('data-price') || '0');
+                        const nameA = a.querySelector('.product-title')?.innerText || '';
+                        const nameB = b.querySelector('.product-title')?.innerText || '';
+                        if (sortVal === 'price-asc') return priceA - priceB;
+                        if (sortVal === 'price-desc') return priceB - priceA;
+                        if (sortVal === 'name-asc') return nameA.localeCompare(nameB);
+                        return 0;
+                    });
+                    sorted.forEach(card => productGrid.appendChild(card));
+                }
+
+                if (emptyState) {
+                    emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+                }
+
+                if (resultsCount) {
+                    const catLabel = selectedCategory === 'all' ? 'Todos los productos' : selectedCategory;
+                    resultsCount.textContent = `${catLabel}: ${visibleCount} resultado${visibleCount === 1 ? '' : 's'}`;
+                }
+            }
+
+            categoryLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    selectedCategory = link.getAttribute('data-category') || 'all';
+
+                    categoryLinks.forEach(l => {
+                        l.classList.remove('active');
+                        const badge = l.querySelector('.category-badge');
+                        if (badge) {
+                            badge.style.background = 'var(--slate-100)';
+                            badge.style.color = 'var(--slate-500)';
+                        }
+                    });
+
+                    link.classList.add('active');
+                    const activeBadge = link.querySelector('.category-badge');
+                    if (activeBadge) {
+                        activeBadge.style.background = 'var(--slate-200)';
+                        activeBadge.style.color = 'var(--slate-700)';
+                    }
+
+                    applyAllFilters();
+                });
+            });
+
+            if (searchInput) searchInput.addEventListener('input', applyAllFilters);
+            if (searchMenuBtn) searchMenuBtn.addEventListener('click', applyAllFilters);
+            if (applyFilterBtn) applyFilterBtn.addEventListener('click', applyAllFilters);
+            if (minPriceInput) minPriceInput.addEventListener('keyup', (e) => { if (e.key === 'Enter') applyAllFilters(); });
+            if (maxPriceInput) maxPriceInput.addEventListener('keyup', (e) => { if (e.key === 'Enter') applyAllFilters(); });
+            if (sortSelect) sortSelect.addEventListener('change', applyAllFilters);
+
+            function resetFilters() {
+                if (searchInput) searchInput.value = '';
+                if (minPriceInput) minPriceInput.value = '';
+                if (maxPriceInput) maxPriceInput.value = '';
+                if (sortSelect) sortSelect.value = 'default';
+                selectedCategory = 'all';
+
+                categoryLinks.forEach(l => {
+                    const isAll = l.getAttribute('data-category') === 'all';
+                    l.classList.toggle('active', isAll);
+                    const badge = l.querySelector('.category-badge');
+                    if (badge) {
+                        badge.style.background = isAll ? 'var(--slate-200)' : 'var(--slate-100)';
+                        badge.style.color = isAll ? 'var(--slate-700)' : 'var(--slate-500)';
+                    }
+                });
+
+                applyAllFilters();
+            }
+
+            if (clearFilterBtn) clearFilterBtn.addEventListener('click', resetFilters);
+            if (resetFromEmptyBtn) resetFromEmptyBtn.addEventListener('click', resetFilters);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uniagro | Historial y Ventas</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Navbar Unificado -->
+    <nav class="navbar">
+        <a href="marketplace.html" class="nav-brand">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="var(--agro-green)"/>
+                <path d="M2 17L12 22L22 17" stroke="var(--agro-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M2 12L12 17L22 12" stroke="var(--agro-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Uni<span>Agro</span>
+        </a>
+        <div class="nav-links">
+            <a href="marketplace.html" class="nav-link">Mercado</a>
+            <a href="dashboard.html" class="nav-link seller-only-nav">Panel Vendedor</a>
+            <a href="insumos.html" class="nav-link seller-only-nav">🌱 Insumos y Tiendas</a>
+            <a href="historial.html" class="nav-link active seller-only-nav">Historial y Ventas</a>
+            <a href="producto.html" class="nav-link">Detalle Producto</a>
+            <div style="width: 1px; height: 24px; background: var(--slate-300); margin: 0 0.5rem;"></div>
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <a href="perfil.html" id="user-profile-link" title="Administrar mi cuenta" style="display: flex; align-items: center; gap: 0.6rem; padding: 0.25rem 0.6rem; border-radius: 9999px; transition: background 0.2s;">
+                    <img id="user-avatar" src="https://ui-avatars.com/api/?name=Usuario+Uniagro&background=10b981&color=fff" alt="Perfil" style="width: 36px; height: 36px; border-radius: 50%; cursor: pointer;">
+                    <span id="user-name" style="font-size: 0.875rem; font-weight: 600; color: var(--slate-700); cursor: pointer;">Mi Cuenta</span>
+                </a>
+                <a href="login.html" id="logout-btn" class="btn btn-outline" style="padding: 0.4rem 0.9rem; border-radius: 9999px; font-size: 0.85rem;">Salir</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem;">
+            <div>
+                <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">Historial de Actividad y Ventas</h1>
+                <p style="color: var(--slate-500); font-size: 1.125rem;">Todas tus ventas y pedidos registrados en tiempo real en la colección.</p>
+            </div>
+            <div style="display: flex; gap: 0.75rem;">
+                <a href="dashboard.html" class="btn btn-outline">Ir al Panel Vendedor</a>
+                <a href="marketplace.html" class="btn btn-primary">Explorar Mercado</a>
+            </div>
+        </div>
+
+        <!-- Estadísticas en Tiempo Real -->
+        <div class="dashboard-stats">
+            <div class="card stat-card">
+                <div class="stat-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                </div>
+                <div>
+                    <div class="stat-label">Ventas Totales Acumuladas</div>
+                    <div class="stat-value" id="totalRevenueStat">$4,730.00</div>
+                    <div style="font-size: 0.75rem; color: var(--agro-green); font-weight: 600; margin-top: 0.25rem;">✓ Calculado desde Firebase</div>
+                </div>
+            </div>
+            <div class="card stat-card">
+                <div class="stat-icon" style="background: var(--slate-100); color: var(--slate-700);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </div>
+                <div>
+                    <div class="stat-label">Transacciones en Base de Datos</div>
+                    <div class="stat-value" id="totalTransactionsCount">4</div>
+                    <div style="font-size: 0.75rem; color: var(--agro-green); font-weight: 600; margin-top: 0.25rem;">✓ Colección "ventas" activa</div>
+                </div>
+            </div>
+            <div class="card stat-card">
+                <div class="stat-icon" style="background: #fef3c7; color: #d97706;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+                </div>
+                <div>
+                    <div class="stat-label">Clientes Interesados (Leads)</div>
+                    <div class="stat-value">3</div>
+                    <div style="font-size: 0.75rem; color: #d97706; font-weight: 500; margin-top: 0.25rem;">Compradores mayoristas</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-content">
+            <!-- Left: Tabla de Ventas Recientes -->
+            <div class="card" style="display: flex; flex-direction: column;">
+                <div style="padding: 1.5rem; border-bottom: 1px solid var(--slate-200); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                    <h2 style="font-size: 1.25rem; margin: 0;">Registro de Ventas (Firebase)</h2>
+                    <div class="search-bar" style="margin: 0; padding: 0.25rem 0.75rem; border-radius: var(--radius-md);">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="text" id="salesSearchInput" placeholder="Buscar por producto o cliente..." style="font-size: 0.875rem;">
+                    </div>
+                </div>
+                <div style="overflow-x: auto;">
+                    <table class="table-styled">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Producto</th>
+                                <th>Cliente</th>
+                                <th>Fecha</th>
+                                <th>Cantidad</th>
+                                <th>Total</th>
+                                <th>Estado</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista-ventas"></tbody>
+                    </table>
+                </div>
+                <div style="padding: 1rem 1.5rem; border-top: 1px solid var(--slate-200); display: flex; justify-content: space-between; align-items: center; background: var(--slate-50); color: var(--slate-500); font-size: 0.875rem;">
+                    <span id="salesFooterCount">Sincronizado con la colección "ventas" de Firebase</span>
+                </div>
+            </div>
+
+            <!-- Right: Registrar Nueva Venta -->
+            <div class="card" style="height: fit-content; border-top: 4px solid var(--agro-green);">
+                <div style="padding: 1.5rem; border-bottom: 1px solid var(--slate-200);">
+                    <h2 style="font-size: 1.25rem; margin: 0;">Registrar Nueva Venta</h2>
+                </div>
+                <div style="padding: 1.5rem;">
+                    <form id="newSaleForm">
+                        <div id="saleMessage" style="display: none; padding: 0.75rem; border-radius: var(--radius-md); margin-bottom: 1rem; font-size: 0.85rem; font-weight: 500;"></div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="saleProduct">Producto Vendido</label>
+                            <input type="text" id="saleProduct" class="form-input" placeholder="Ej. Aguacates Hass Orgánicos" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="saleClient">Cliente / Comprador</label>
+                            <input type="text" id="saleClient" class="form-input" placeholder="Ej. Restaurante El Huerto" required>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                            <div>
+                                <label class="form-label" for="saleQuantity">Cantidad</label>
+                                <input type="text" id="saleQuantity" class="form-input" placeholder="Ej. 10 cajas" required>
+                            </div>
+                            <div>
+                                <label class="form-label" for="saleTotal">Monto Total ($)</label>
+                                <input type="number" id="saleTotal" min="1" step="any" class="form-input" placeholder="450.00" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="saleStatus">Estado de la Venta</label>
+                            <select id="saleStatus" class="form-input">
+                                <option value="Completado">Completado</option>
+                                <option value="Pendiente">Pendiente de envío</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" id="saveSaleBtn" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                            + Guardar Venta en Firebase
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Clientes Interesados (Leads) -->
+        <section style="margin-top: 3rem;">
+            <h2 style="font-size: 1.5rem; margin-bottom: 0.25rem;">Clientes Interesados (Leads)</h2>
+            <p style="color: var(--slate-500); font-size: 0.95rem;">Compradores mayoristas que buscan tus productos agrícolas</p>
+
+            <div class="leads-grid">
+                <div class="card lead-card">
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                            <div>
+                                <div style="font-weight: 700; color: var(--slate-900);">Restaurante El Huerto</div>
+                                <div style="font-size: 0.8rem; color: var(--slate-500);">📍 Bogotá, D.C.</div>
+                            </div>
+                            <span class="status-badge status-active">Nuevo</span>
+                        </div>
+                        <p style="font-size: 0.9rem; color: var(--slate-600); font-style: italic;">
+                            "Estamos interesados en adquirir 50 bultos mensuales de papa sabanera para nuestra cadena. ¿Podemos negociar precio por volumen?"
+                        </p>
+                    </div>
+                    <button type="button" class="btn btn-primary lead-contact-btn" data-client="Restaurante El Huerto" style="width: 100%;">
+                        💬 Contactar Cliente
+                    </button>
+                </div>
+
+                <div class="card lead-card">
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                            <div>
+                                <div style="font-weight: 700; color: var(--slate-900);">Central de Abastos M.</div>
+                                <div style="font-size: 0.8rem; color: var(--slate-500);">📍 Villavicencio</div>
+                            </div>
+                            <span class="status-badge" style="background: #fef3c7; color: #b45309;">Mayorista</span>
+                        </div>
+                        <p style="font-size: 0.9rem; color: var(--slate-600); font-style: italic;">
+                            "Buscamos proveedor constante de zanahoria y tomate chonto. Requerimos entrega semanal en punto de venta."
+                        </p>
+                    </div>
+                    <button type="button" class="btn btn-outline lead-contact-btn" data-client="Central de Abastos M." style="width: 100%;">
+                        💬 Contactar Cliente
+                    </button>
+                </div>
+
+                <div class="card lead-card">
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                            <div>
+                                <div style="font-weight: 700; color: var(--slate-900);">Supermercados Vida</div>
+                                <div style="font-size: 0.8rem; color: var(--slate-500);">📍 Medellín</div>
+                            </div>
+                            <span class="status-badge status-active">Verificado</span>
+                        </div>
+                        <p style="font-size: 0.9rem; color: var(--slate-600); font-style: italic;">
+                            "Requerimos aguacate Hass orgánico empacado en cajas de 10kg con despacho directo."
+                        </p>
+                    </div>
+                    <button type="button" class="btn btn-outline lead-contact-btn" data-client="Supermercados Vida" style="width: 100%;">
+                        💬 Contactar Cliente
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        import { getFirestore, collection, doc, setDoc, addDoc, getDocs, deleteDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCgCahd5EGN6_f3LgUDBN2LBnPsmIuu1h0",
+            authDomain: "uniagro-c28a1.firebaseapp.com",
+            projectId: "uniagro-c28a1",
+            storageBucket: "uniagro-c28a1.firebasestorage.app",
+            messagingSenderId: "628982611619",
+            appId: "1:628982611619:web:eeede64203d82c8b068916"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Ventas iniciales que se guardan automáticamente en la colección "ventas" de Firebase si está vacía
+        const VENTAS_INICIALES = [
+            {
+                docId: "venta_1",
+                ID: 1,
+                Producto: "Papa Sabanera Premium",
+                Cliente: "Restaurante El Huerto",
+                Cantidad: "15 Bultos",
+                Monto: 1200,
+                Total: "$1,200.00",
+                Fecha: "08 Nov, 2026",
+                Estado: "Completado"
+            },
+            {
+                docId: "venta_2",
+                ID: 2,
+                Producto: "Zanahoria Lavada",
+                Cliente: "Central de Abastos M.",
+                Cantidad: "8 Bultos",
+                Monto: 640,
+                Total: "$640.00",
+                Fecha: "09 Nov, 2026",
+                Estado: "Pendiente"
+            },
+            {
+                docId: "venta_3",
+                ID: 3,
+                Producto: "Cebolla Cabezona Blanca",
+                Cliente: "Supermercados Vida",
+                Cantidad: "20 Canastillas",
+                Monto: 2440,
+                Total: "$2,440.00",
+                Fecha: "09 Nov, 2026",
+                Estado: "Completado"
+            },
+            {
+                docId: "venta_4",
+                ID: 4,
+                Producto: "Aguacates Hass Orgánicos",
+                Cliente: "Distribuidora Del Campo",
+                Cantidad: "10 Cajas",
+                Monto: 450,
+                Total: "$450.00",
+                Fecha: "10 Nov, 2026",
+                Estado: "Completado"
+            }
+        ];
+
+        async function ensureSalesSeeded() {
+            try {
+                const snap = await getDocs(collection(db, "ventas"));
+                if (snap.empty) {
+                    console.log("🧾 Sembrando historial inicial en la colección 'ventas' de Firebase...");
+                    for (const v of VENTAS_INICIALES) {
+                        const { docId, ...data } = v;
+                        await setDoc(doc(db, "ventas", docId), data);
+                    }
+                    console.log("✅ Historial de ventas guardado en Firestore (uniagro-c28a1 -> ventas).");
+                }
+            } catch (err) {
+                console.warn("Aviso al verificar colección ventas:", err);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const currentUser = JSON.parse(localStorage.getItem('uniagro_current_user') || 'null');
+                if (currentUser) {
+                    // Si es comprador, no puede ver Historial y Ventas -> redirigir al Mercado
+                    if ((currentUser.rol || '').toLowerCase() === 'comprador') {
+                        window.location.replace('marketplace.html');
+                        return;
+                    }
+                    if (currentUser.nombre) {
+                        const userNameEl = document.getElementById('user-name');
+                        const userAvatarEl = document.getElementById('user-avatar');
+                        if (userNameEl) userNameEl.textContent = currentUser.nombre;
+                        if (userAvatarEl) {
+                            userAvatarEl.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.nombre)}&background=10b981&color=fff`;
+                        }
+                    }
+                }
+            } catch (e) {}
+
+            const logoutBtn = document.getElementById('logout-btn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', () => {
+                    localStorage.removeItem('uniagro_current_user');
+                });
+            }
+
+            const listaVentas = document.getElementById('lista-ventas');
+            const totalTransactionsCount = document.getElementById('totalTransactionsCount');
+            const totalRevenueStat = document.getElementById('totalRevenueStat');
+            const salesFooterCount = document.getElementById('salesFooterCount');
+            const salesSearchInput = document.getElementById('salesSearchInput');
+
+            function parseMonto(v) {
+                if (typeof v.Monto === 'number' && !isNaN(v.Monto)) return v.Monto;
+                const raw = String(v.Total || v.total || '0').replace(/[^0-9.]/g, '');
+                return parseFloat(raw) || 0;
+            }
+
+            function renderSalesTable(salesList) {
+                listaVentas.innerHTML = '';
+                let sumRevenue = 0;
+
+                salesList.forEach(venta => {
+                    const idNum = venta.ID || '-';
+                    const producto = venta.Producto || venta.producto || 'Producto Agrícola';
+                    const cliente = venta.Cliente || venta.cliente || 'Comprador Directo';
+                    const cantidad = venta.Cantidad || venta.cantidad || '1 unidad';
+                    const montoNum = parseMonto(venta);
+                    sumRevenue += montoNum;
+                    const totalTxt = venta.Total || venta.total || `$${montoNum.toFixed(2)}`;
+                    const estado = venta.Estado || venta.estado || 'Completado';
+                    const isPending = estado.toLowerCase().includes('pendiente');
+
+                    let fechaTxt = venta.Fecha || 'Hoy';
+                    if (!venta.Fecha && venta.fecha && typeof venta.fecha.toDate === 'function') {
+                        fechaTxt = new Date(venta.fecha.toDate()).toLocaleDateString('es-CO');
+                    }
+
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td style="font-weight: 700; color: var(--slate-500);">#${idNum}</td>
+                        <td style="font-weight: 600; color: var(--slate-900);">${producto}</td>
+                        <td>${cliente}</td>
+                        <td>${fechaTxt}</td>
+                        <td>${cantidad}</td>
+                        <td style="font-weight: 700; color: var(--agro-green-dark);">${totalTxt}</td>
+                        <td>
+                            <span class="status-badge ${isPending ? '' : 'status-active'}" style="${isPending ? 'background: #fef3c7; color: #b45309;' : ''}">
+                                ${estado}
+                            </span>
+                        </td>
+                        <td style="text-align: right;">
+                            <button type="button" class="btn btn-outline delete-sale-btn" style="padding: 0.25rem 0.65rem; font-size: 0.75rem; color: #ef4444; border-color: #fca5a5;">Eliminar</button>
+                        </td>
+                    `;
+
+                    const delBtn = tr.querySelector('.delete-sale-btn');
+                    if (delBtn) {
+                        delBtn.addEventListener('click', async () => {
+                            if (venta.docIdReal) {
+                                try {
+                                    await deleteDoc(doc(db, "ventas", venta.docIdReal));
+                                } catch (err) {
+                                    console.error("Error al eliminar venta:", err);
+                                }
+                            }
+                        });
+                    }
+
+                    listaVentas.appendChild(tr);
+                });
+
+                if (totalTransactionsCount) totalTransactionsCount.textContent = salesList.length;
+                if (totalRevenueStat) totalRevenueStat.textContent = `$${sumRevenue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+                if (salesFooterCount) salesFooterCount.textContent = `Mostrando ${salesList.length} ventas registradas en Firebase (colección "ventas")`;
+            }
+
+            renderSalesTable(VENTAS_INICIALES);
+            await ensureSalesSeeded();
+
+            let currentMaxSaleId = 4;
+
+            // Escuchar en tiempo real todos los documentos de la colección "ventas" en Firebase
+            onSnapshot(collection(db, "ventas"), (snapshot) => {
+                if (!snapshot.empty) {
+                    const docs = [];
+                    let maxId = 0;
+                    snapshot.forEach((docSnap) => {
+                        const data = docSnap.data();
+                        const numId = Number(data.ID) || 0;
+                        if (numId > maxId) maxId = numId;
+                        docs.push({ docIdReal: docSnap.id, ...data });
+                    });
+                    currentMaxSaleId = maxId;
+                    docs.sort((a, b) => (Number(b.ID) || 0) - (Number(a.ID) || 0));
+                    renderSalesTable(docs);
+                } else {
+                    renderSalesTable([]);
+                }
+            });
+
+            if (salesSearchInput) {
+                salesSearchInput.addEventListener('input', () => {
+                    const qText = salesSearchInput.value.toLowerCase().trim();
+                    listaVentas.querySelectorAll('tr').forEach(row => {
+                        row.style.display = row.innerText.toLowerCase().includes(qText) ? '' : 'none';
+                    });
+                });
+            }
+
+            // Formulario de Nueva Venta -> Guarda directamente en la colección "ventas" de Firebase
+            const newSaleForm = document.getElementById('newSaleForm');
+            const saleMsg = document.getElementById('saleMessage');
+            const saveSaleBtn = document.getElementById('saveSaleBtn');
+
+            if (newSaleForm) {
+                newSaleForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const producto = document.getElementById('saleProduct').value.trim();
+                    const cliente = document.getElementById('saleClient').value.trim();
+                    const cantidad = document.getElementById('saleQuantity').value.trim();
+                    const monto = parseFloat(document.getElementById('saleTotal').value) || 0;
+                    const estado = document.getElementById('saleStatus').value;
+
+                    saveSaleBtn.disabled = true;
+                    saveSaleBtn.textContent = 'Guardando en Firebase...';
+
+                    const nextId = currentMaxSaleId + 1;
+                    const fechaHoy = new Date().toLocaleDateString('es-CO', { day: '2-digit', month: 'short', year: 'numeric' });
+
+                    const nuevaVenta = {
+                        ID: nextId,
+                        Producto: producto,
+                        Cliente: cliente,
+                        Cantidad: cantidad,
+                        Monto: monto,
+                        Total: `$${monto.toFixed(2)}`,
+                        Fecha: fechaHoy,
+                        Estado: estado,
+                        fecha: serverTimestamp()
+                    };
+
+                    try {
+                        await addDoc(collection(db, "ventas"), nuevaVenta);
+                        newSaleForm.reset();
+                        saleMsg.style.display = 'block';
+                        saleMsg.style.background = '#dcfce7';
+                        saleMsg.style.color = '#15803d';
+                        saleMsg.textContent = `✅ ¡Venta #${nextId} registrada en la colección "ventas" de Firebase!`;
+                        setTimeout(() => { saleMsg.style.display = 'none'; }, 4000);
+                    } catch (err) {
+                        console.error("Error al guardar venta:", err);
+                        saleMsg.style.display = 'block';
+                        saleMsg.style.background = '#fee2e2';
+                        saleMsg.style.color = '#b91c1c';
+                        saleMsg.textContent = '❌ Error al guardar la venta en Firebase.';
+                    }
+
+                    saveSaleBtn.disabled = false;
+                    saveSaleBtn.textContent = '+ Guardar Venta en Firebase';
+                });
+            }
+
+            // Botones Contactar Cliente
+            document.querySelectorAll('.lead-contact-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const client = btn.getAttribute('data-client');
+                    btn.textContent = `✅ Solicitud enviada a ${client}`;
+                    btn.classList.remove('btn-outline');
+                    btn.classList.add('btn-primary');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
